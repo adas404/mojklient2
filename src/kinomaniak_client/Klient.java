@@ -165,7 +165,11 @@ public class Klient {
             wyslijO(dbDate);
             tmp =(String) odbierzO();
             if (tmp.equals("!MOVUPD!")){ //zrobić usuwanie starej bazy!
-                pobierzBaze();
+                try{
+               wy.writeObject(oin.readObject());
+               }catch(IOException e){
+                System.err.println("IOException!");
+            }
           }  
             
         } else {
