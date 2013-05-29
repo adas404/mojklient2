@@ -75,7 +75,7 @@ public class Server  implements Runnable{
             this.oout.writeObject((String)"!OK!");
             this.luser = (User)oin.readObject(); // odczyt obiektu użytkownika od klienta        
             boolean uok = checkUser(); // sprawdzenie użytkownika
-            if(uok) this.oout.writeObject((String)"!UOK");
+            if(uok) this.oout.writeObject((String)"!UOK!");
             else{
                 this.logged = false;
                 this.oout.writeObject((String)"!ERROR!");
