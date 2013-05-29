@@ -15,7 +15,10 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+import kinomaniak_objs.Show;
 import kinomaniak_objs.User;
 
 /**
@@ -44,7 +47,7 @@ public class Klient {
      public Klient (){
         // this.socket=socket;
           try{
-            InetAddress addr = InetAddress.getByName("localhost");
+            InetAddress addr = InetAddress.getByName("10.36.29.161");
             socket = new Socket(addr, PORT);
             System.out.println("połączono!");
            // this.out = new PrintWriter(this.socket.getOutputStream(),true);  //out for data
@@ -115,11 +118,18 @@ public class Klient {
      public void pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
          tmp2 =(String) odbierzO();
-         if (tmp2.equals("!OK!")){
+         if (tmp2.equals("!OK!")){//90-98
             try{
-            //  File fil = (File)oin.readObject();  
-             wy.writeObject(oin.readObject());
-              //  wy = new ObjectOutputStream(new FileOutputStream(fil)); 
+                    Show[] sh = (Show[])oin.readObject();
+                    wy = new ObjectOutputStream(new FileOutputStream("Shows.kin"));
+                    Date dateNow = new Date (); 
+                    SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
+                    StringBuilder sdt = new StringBuilder( dt.format( dateNow ) );
+                    String st = sdt.toString();
+                    wy.writeObject(st);
+                    wy.writeObject(sh.length);
+                    wy.writeObject(sh);
+                    wy.close();
             }catch(IOException e){
                 System.err.println("IOException!");
             }
@@ -140,24 +150,24 @@ public class Klient {
         String username = in.nextLine();
         System.out.println("Podaj hasło");
         String pass = in.nextLine();
-        User user = new User(username,pass,0);
+        User user = new User(username,pass,1);
         wyslijO(user);
         tmp = (String) odbierzO();
         System.out.println(tmp);
-        if (!tmp.equals("!ERROR!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
+        if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
             System.err.println("Błąd logowania!");
             rozlacz();
             System.exit(-1);
           }
      //   try{
-        f = new File("movies.db");
+        f = new File("Shows.kin");
        // }  
         //catch(IOException e)
     //    {System.err.println("IOException!");}
         if (f.exists()) { //jeśli to nie zadziała otworzymy nowy strumień i damy wyjątek file not found
             System.out.println("Jest baza! Sprawdzam date");
             try{
-                we = new ObjectInputStream(new FileInputStream("movies.db"));
+                we = new ObjectInputStream(new FileInputStream("Shows.kin"));
                 dbDate = (String)we.readObject();}
                 catch(ClassNotFoundException | IOException cnfe){
                 System.err.println("IOException! or ClassNotFoundException!");}
