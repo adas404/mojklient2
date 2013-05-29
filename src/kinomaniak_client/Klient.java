@@ -112,12 +112,14 @@ public class Klient {
          
      }
   }
-     public void pobierzBaze(){
+     public void pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
          tmp2 =(String) odbierzO();
          if (tmp2.equals("!OK!")){
             try{
-                wy = new ObjectOutputStream(new FileOutputStream("movies.db")); 
+            //  File fil = (File)oin.readObject();  
+             wy.writeObject(oin.readObject());
+              //  wy = new ObjectOutputStream(new FileOutputStream(fil)); 
             }catch(IOException e){
                 System.err.println("IOException!");
             }
@@ -125,7 +127,7 @@ public class Klient {
          
      }
      
-     public void dzialaj(){
+     public void dzialaj() throws ClassNotFoundException{
        // String tmp;
         tmp =(String) odbierzO();
         System.out.println(tmp);
@@ -138,7 +140,7 @@ public class Klient {
         String username = in.nextLine();
         System.out.println("Podaj hasło");
         String pass = in.nextLine();
-        User user = new User(username,pass,10);
+        User user = new User(username,pass,0);
         wyslijO(user);
         tmp = (String) odbierzO();
         System.out.println(tmp);
@@ -149,11 +151,10 @@ public class Klient {
           }
      //   try{
         f = new File("movies.db");
-       // }   
+       // }  
         //catch(IOException e)
     //    {System.err.println("IOException!");}
-        if (f.exists()) {
-           
+        if (f.exists()) { //jeśli to nie zadziała otworzymy nowy strumień i damy wyjątek file not found
             System.out.println("Jest baza! Sprawdzam date");
             try{
                 we = new ObjectInputStream(new FileInputStream("movies.db"));
@@ -161,10 +162,15 @@ public class Klient {
                 catch(ClassNotFoundException | IOException cnfe){
                 System.err.println("IOException! or ClassNotFoundException!");}
             wyslijO((String)"!GETMOVDT!");
-            wyslijO(dbDate);//todo!
+            wyslijO(dbDate);
+            tmp =(String) odbierzO();
+            if (tmp.equals("!MOVUPD!")){ //zrobić usuwanie starej bazy!
+                pobierzBaze();
+          }  
             
         } else {
             System.out.println("brakbazy!");
+            pobierzBaze();
         }
         rozlacz();
      }
