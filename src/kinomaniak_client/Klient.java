@@ -47,7 +47,7 @@ public class Klient {
      public Klient (){
         // this.socket=socket;
           try{
-            InetAddress addr = InetAddress.getByName("10.36.29.161");
+            InetAddress addr = InetAddress.getByName("localhost");
             socket = new Socket(addr, PORT);
             System.out.println("połączono!");
            // this.out = new PrintWriter(this.socket.getOutputStream(),true);  //out for data
@@ -55,7 +55,7 @@ public class Klient {
             this.oout = new ObjectOutputStream(this.socket.getOutputStream()); // output for objects
            // this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream())); //in for data
             }catch(IOException e){
-            System.err.println("IOError!");
+            System.err.println("IOErrorr!");
            
         }
     }
@@ -101,7 +101,21 @@ public class Klient {
             return object;
         }   
      }
-   
+     
+     public String menu(){
+         System.out.println("Wybierz co chcesz robić:");
+         System.out.println("5.rezerwacja biletu");
+         System.out.println("6.potwierdzenie rezerwacji");
+         System.out.println("7.odbiór rezerwacji");
+         System.out.println("8.anulowanie rezerwacji");
+         String cmd = in.nextLine();
+         return cmd;
+     }
+     
+     public void rezerwujBilet(){
+         
+     }
+     
      public void rozlacz() {
        
          try{
@@ -159,12 +173,9 @@ public class Klient {
             rozlacz();
             System.exit(-1);
           }
-     //   try{
-        f = new File("Shows.kin");
-       // }  
-        //catch(IOException e)
-    //    {System.err.println("IOException!");}
-        if (f.exists()) { //jeśli to nie zadziała otworzymy nowy strumień i damy wyjątek file not found
+       //    f = new File("Shows.kin");
+     
+     /*   if (f.exists()) { //jeśli to nie zadziała otworzymy nowy strumień i damy wyjątek file not found
             System.out.println("Jest baza! Sprawdzam date");
             try{
                 we = new ObjectInputStream(new FileInputStream("Shows.kin"));
@@ -182,10 +193,25 @@ public class Klient {
             }
           }  
             
-        } else {
-            System.out.println("brakbazy!");
+        } else {*/
+            System.out.println("Pobieram baze!");
             pobierzBaze();
-        }
+      //  }
+            
+        //sekcja gotowość do pracy!
+            wyslijO((String)"!RDY!");
+            tmp = (String) odbierzO();
+            System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
+            if(tmp.equals("!RDY!")){
+                System.out.println("Serwer gotowy do pracy!");
+            }
+            
+            switch(Integer.parseInt(menu())){
+                case 5:{
+                    rezerwujBilet();//todo!
+                }
+           }
+            
         rozlacz();
      }
 }  

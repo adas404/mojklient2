@@ -1,0 +1,36 @@
+Klient				Serwer
+Connect() 		->	
+			<-	!OK!
+writeObject(User)	->	readObject(User)
+				if User == OK: 
+			<-	!UOK!			#user OK 
+				else:
+			<-	!UERROR!
+				Disconnect
+#dalej jeśli OK
+#jeśli klient nie ma bazy filmów:
+!GETMOV!		->	
+			<-	!OK!
+readObject(Show[])	<-	writeObject(Show[])
+			<-	!DT:<data_utworzenia_bazy>!
+#Klient zapisuje bazę danych wraz z datą do pliku/plików
+!OK!			->	
+#jeśli klient ma zapisaną bazę filmów:
+#odczyt daty z pliku do <data>
+!GETMOVDT:<data>!	->	if <data> == <data_bazy_serwera>:
+			<-	!MOVOK!
+#odczyt bazy filmów z pliku/plików do obiektów Show[]
+				else:
+#jeśli klient otrzyma	<-	!MOVUPD!
+#!MOVUPD! znaczy, że
+#potrzebuje aktualizacji
+#postępowanie jak przy braku bazy.
+
+!RDY!			->			
+			<-	!RDY!		#wysłanie komunikatów o gotowości obu 
+						#stron do rozpoczęcia pracy
+
+!<komenda>!		->	
+			<-	!OK!
+			<-	!<odpowiedz>!
+!OK!			->
