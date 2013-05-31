@@ -113,7 +113,7 @@ public class Klient {
      }
      
      public void rezerwujBilet(){
-         
+      System.out.println("Wybrałeś opcję rezerwacji biletu");
      }
      
      public void rozlacz() {
@@ -201,12 +201,14 @@ public class Klient {
         //sekcja gotowość do pracy!
             wyslijO((String)"!RDY!");
             tmp = (String) odbierzO();
-            System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
+           // System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
             if(tmp.equals("!RDY!")){
                 System.out.println("Serwer gotowy do pracy!");
             }
-            
-            switch(Integer.parseInt(menu())){
+            int tmp3 = Integer.parseInt(menu());
+            wyslijO((String)"!CMD!");
+            wyslijO((Integer)tmp3);
+            switch(tmp3){
                 case 5:{
                     rezerwujBilet();//todo!
                 }
