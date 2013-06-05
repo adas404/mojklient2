@@ -145,6 +145,28 @@ public class Klient {
       
      }
      
+     public void potwierdzOdbierzRezerwacje(String decyzja){
+         switch (decyzja) {
+             case "POTWIERDZ":
+                 System.out.println("Wybrałeś opcję potwierdzenia rezerwacji");
+                 break;
+             case "ANULUJ":
+                 System.out.println("Wybrałeś opcję potwierdzenia rezerwacji");
+                 break;
+             case "ODBIERZ":
+                 System.out.println("Wybrałeś opcję odebrania rezerwacji");
+         }
+         tmp =(String) odbierzO();
+         if (!tmp.equals("!GDATA!")){
+             System.out.println("Błąd serwera, oczekiwano !Gdata!");
+             rozlacz();
+             System.exit(-1);
+         }else{
+             wyslijO((String)"!OK!");
+         }
+         
+     }
+     
      public void rozlacz() {
        
          try{
@@ -236,10 +258,19 @@ public class Klient {
             }
             int tmp3 = Integer.parseInt(menu());
             wyslijO((String)"!CMD!");
-            wyslijO((Integer)tmp3);
+            wyslijO(tmp3);
             switch(tmp3){
                 case 5:{
                     rezerwujBilet();//todo!
+                }
+                case 6:{
+                    potwierdzOdbierzRezerwacje("POTWIERDZ");
+                }
+                case 7:{
+                    potwierdzOdbierzRezerwacje("ANULUJ");
+                }
+                case 8:{
+                    potwierdzOdbierzRezerwacje("ODBIERZ");
                 }
            }
             
