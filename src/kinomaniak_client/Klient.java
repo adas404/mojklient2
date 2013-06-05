@@ -114,6 +114,25 @@ public class Klient {
      
      public void rezerwujBilet(){
       System.out.println("Wybrałeś opcję rezerwacji biletu");
+      tmp =(String) odbierzO();
+      if (!tmp.equals("!GDATA!")){
+          System.out.println("Błąd serwera, oczekiwano !Gdata!");
+          rozlacz();
+          System.exit(-1);
+      }
+      wyslijO((String)"!OK!");
+      tmp=(String)odbierzO();
+      if (tmp.equals("!NAZW!")){
+          System.out.println("Podaj imie i nazwisko:");
+          tmp = in.nextLine();
+          wyslijO(tmp);
+      }
+      tmp=(String)odbierzO();
+      if (tmp.equals("!SEANS!")){
+          System.out.println("Podaj ID SEANSU:");
+          tmp = in.nextLine();
+          wyslijO(Integer.parseInt(tmp));
+      }
      }
      
      public void rozlacz() {
