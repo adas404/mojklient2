@@ -133,6 +133,16 @@ public class Klient {
           tmp = in.nextLine();
           wyslijO(Integer.parseInt(tmp));
       }
+      System.out.println("Podaj rząd w którym chcesz siedzieć:");
+      tmp = in.nextLine();
+      int[] tmpseat = new int[2];
+      tmpseat[0]=Integer.parseInt(tmp);
+      System.out.println("Podaj miejsce w rzędzie na którym chcesz siedzieć");
+      tmp = in.nextLine();
+      tmpseat[1] = Integer.parseInt(tmp);
+      wyslijO(tmpseat);
+      
+      
      }
      
      public void rozlacz() {
