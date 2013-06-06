@@ -16,8 +16,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+import kinomaniak_objs.Res;
 import kinomaniak_objs.Show;
 import kinomaniak_objs.User;
 
@@ -164,6 +167,14 @@ public class Klient {
          }else{
              wyslijO((String)"!OK!");
          }
+         Res[] ares = new Res[10];
+         ares =(Res[]) odbierzO();
+         tmp = (String) odbierzO();
+         if (!tmp.equals("!GORES!")){
+             System.out.println("Błąd serwera, oczekiwano !GORES!");
+             rozlacz();
+             System.exit(-1);
+         }
          
      }
      
@@ -180,20 +191,23 @@ public class Klient {
          
      }
   }
+@SuppressWarnings("unchecked"); 
      public void pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
          tmp2 =(String) odbierzO();
          if (tmp2.equals("!OK!")){//90-98
-            try{
-                    Show[] sh = (Show[])oin.readObject();
+            try{    
+                    List<Show> ar = (ArrayList<Show>)oin.readObject();
+                    Show[] shss = ar.toArray(new Show[]{});
+                   // Show[] sh = (Show[])oin.readObject();
                     wy = new ObjectOutputStream(new FileOutputStream("Shows.kin"));
                     Date dateNow = new Date (); 
                     SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
                     StringBuilder sdt = new StringBuilder( dt.format( dateNow ) );
                     String st = sdt.toString();
                     wy.writeObject(st);
-                    wy.writeObject(sh.length);
-                    wy.writeObject(sh);
+                    wy.writeObject(shss.length);
+                    wy.writeObject(shss);
                     wy.close();
             }catch(IOException e){
                 System.err.println("IOException!");
