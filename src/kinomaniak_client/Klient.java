@@ -191,7 +191,7 @@ public class Klient {
          
      }
   }
-@SuppressWarnings("unchecked"); 
+@SuppressWarnings("unchecked")
      public void pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
          tmp2 =(String) odbierzO();
