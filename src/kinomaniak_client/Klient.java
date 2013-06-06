@@ -45,7 +45,7 @@ public class Klient {
      ObjectInputStream we;
      ObjectOutputStream wy;
      File f = null;
-     
+    
      
      public Klient (){
         // this.socket=socket;
@@ -154,7 +154,7 @@ public class Klient {
                  System.out.println("Wybrałeś opcję potwierdzenia rezerwacji");
                  break;
              case "ANULUJ":
-                 System.out.println("Wybrałeś opcję potwierdzenia rezerwacji");
+                 System.out.println("Wybrałeś opcję anulowania rezerwacji");
                  break;
              case "ODBIERZ":
                  System.out.println("Wybrałeś opcję odebrania rezerwacji");
@@ -167,15 +167,30 @@ public class Klient {
          }else{
              wyslijO((String)"!OK!");
          }
-         Res[] ares = new Res[10];
-         ares =(Res[]) odbierzO();
+        
+         Res[] rezerwacje = (Res[])odbierzO();
+         for (int i=0;i<=rezerwacje.length;i++){
+             System.out.println("Imie i nazwisko"+rezerwacje[i].getName());
+             System.out.println("Show ID:"+rezerwacje[i].getShowID());
+             System.out.println("Rząd"+rezerwacje[i].getSeat()[0]+"Miejsce"+rezerwacje[i].getSeat()[1]);
+         }
+         System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
+            tmp = in.nextLine();
+            
+        for (int i=0;i<=rezerwacje.length;i++){
+             if (rezerwacje[i].getName().equals(tmp)){
+                 Res res = new Res(tmp,rezerwacje[i].getShowID(),rezerwacje[i].getSeat());
+                 break;
+             }
+         } 
+        
          tmp = (String) odbierzO();
          if (!tmp.equals("!GORES!")){
              System.out.println("Błąd serwera, oczekiwano !GORES!");
              rozlacz();
              System.exit(-1);
          }
-         
+        wyslijO((Res)res);
      }
      
      public void rozlacz() {
