@@ -4,11 +4,15 @@
  */
 package kinomaniak_objs;
 
+import java.io.Serializable;
+
 /**
  *
  * @author qbass
  */
-public class Res {
+public class Res implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
    
     private String imienazwisko;
     private int showid;

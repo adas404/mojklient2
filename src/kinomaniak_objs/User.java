@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * @author qbass
  */
 public class User implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String name;
     private String password;
     private int utype;

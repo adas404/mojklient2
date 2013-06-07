@@ -11,6 +11,8 @@ import java.io.Serializable;
  * @author qbass
  */
 public class CRoom implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     private int id;
     private boolean[][] seats;
     

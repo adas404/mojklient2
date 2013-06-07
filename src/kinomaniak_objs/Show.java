@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author qbass
  */
 public class Show implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private int showid;
     private Movie mov;
@@ -24,6 +25,8 @@ public class Show implements Serializable {
      * @param time
      */
     public Show(Movie mov, CRoom room, Time time){
+        
+        
         this.mov = mov;
         this.room = room;
         this.time = time;

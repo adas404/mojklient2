@@ -169,7 +169,7 @@ public class Klient {
          }
         
          Res[] rezerwacje = (Res[])odbierzO();
-         for (int i=0;i<=rezerwacje.length;i++){
+         for (int i=0;i<rezerwacje.length;i++){
              System.out.println("Imie i nazwisko"+rezerwacje[i].getName());
              System.out.println("Show ID:"+rezerwacje[i].getShowID());
              System.out.println("Rząd"+rezerwacje[i].getSeat()[0]+"Miejsce"+rezerwacje[i].getSeat()[1]);
@@ -177,7 +177,7 @@ public class Klient {
          System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
             tmp = in.nextLine();
           Res res = null;  
-        for (int i=0;i<=rezerwacje.length;i++){
+        for (int i=0;i<rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(tmp)){
                  res = new Res(tmp,rezerwacje[i].getShowID(),rezerwacje[i].getSeat());
                  break;
@@ -244,8 +244,9 @@ public class Klient {
         String username = in.nextLine();
         System.out.println("Podaj hasło");
         String pass = in.nextLine();
-        User user = new User(username,pass,1);
-        wyslijO(user);
+        luser =new User(username,pass,1);
+        //User user = new User(username,pass,1);
+        wyslijO(luser);
         tmp = (String) odbierzO();
         System.out.println(tmp);
         if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
@@ -287,19 +288,29 @@ public class Klient {
             }
             int tmp3 = Integer.parseInt(menu());
             wyslijO((String)"!CMD!");
-            wyslijO(tmp3);
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO(tmp3);
+            }else{
+                System.out.println("NOT OK");
+                return;
+            }
             switch(tmp3){
                 case 5:{
                     rezerwujBilet();//todo!
+                    break;
                 }
                 case 6:{
                     potwierdzOdbierzRezerwacje("POTWIERDZ");
+                    break;
                 }
                 case 7:{
                     potwierdzOdbierzRezerwacje("ANULUJ");
+                    break;
                 }
                 case 8:{
                     potwierdzOdbierzRezerwacje("ODBIERZ");
+                    break;
                 }
            }
             
