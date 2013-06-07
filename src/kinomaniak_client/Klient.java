@@ -176,10 +176,10 @@ public class Klient {
          }
          System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
             tmp = in.nextLine();
-            
+          Res res = null;  
         for (int i=0;i<=rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(tmp)){
-                 Res res = new Res(tmp,rezerwacje[i].getShowID(),rezerwacje[i].getSeat());
+                 res = new Res(tmp,rezerwacje[i].getShowID(),rezerwacje[i].getSeat());
                  break;
              }
          } 
