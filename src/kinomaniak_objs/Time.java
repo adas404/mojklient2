@@ -14,14 +14,27 @@ public class Time implements Serializable{
         private int hour;
         private int minute;
         
-        public Time(int hour,int minute){
+        /**
+     *
+     * @param hour exact hour
+     * @param minute exact minute
+     */
+    public Time(int hour,int minute){
             this.hour = hour;
             this.minute = minute;
         }        
-        public int getHour(){
+        /**
+     * gets hour from {@link #Time} class
+     * @return hour
+     */
+    public int getHour(){
             return this.hour;
         }
-        public int getMinute(){
+        /**
+     * gets minute from {@link #Time} class
+     * @return minute
+     */
+    public int getMinute(){
             return this.minute;
         }
     }
