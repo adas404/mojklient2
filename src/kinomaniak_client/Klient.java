@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kinomaniak_objs.Res;
 import kinomaniak_objs.Show;
 import kinomaniak_objs.User;
@@ -230,7 +232,13 @@ public class Klient {
          }
          
      }
-     
+     private void flush(){
+         try {
+             oout.flush();
+         } catch (IOException e) {
+             System.err.println("IOError "+e);
+         }
+     }
      public void dzialaj() throws ClassNotFoundException{
        // String tmp;
         tmp =(String) odbierzO();
@@ -285,12 +293,15 @@ public class Klient {
            // System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
             if(tmp.equals("!RDY!")){
                 System.out.println("Serwer gotowy do pracy!");
+                flush();
             }
             while(true){
-            int tmp3 = Integer.parseInt(menu());
+            flush();
             wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
+            int tmp3;
             if(tmp.equals("!OK!")){
+                tmp3 = Integer.parseInt(menu());
                 wyslijO(tmp3);
             }else{
                 System.out.println("NOT OK");
