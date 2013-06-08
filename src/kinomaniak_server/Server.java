@@ -19,9 +19,9 @@ import java.io.FileOutputStream;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Formatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 /**
  *
  * @author qbass
@@ -43,9 +43,7 @@ public class Server  implements Runnable{
      private ObjectInputStream oin; //input for objects
      
     
-    /**
-     * @param args the command line arguments
-     */
+    
     /*
     public Server(int type,String username){
         this.loginname = username;
@@ -53,6 +51,10 @@ public class Server  implements Runnable{
         this.setCmds(type);        
     }
     */
+     /**
+      * Konstruktor wątku serwera
+     * @param sockfd deskryptor gniazda dla podłączonego klienta
+     */
     public Server(Socket sockfd){
         this.sockfd = sockfd;
         try{
@@ -62,7 +64,20 @@ public class Server  implements Runnable{
             this.oin = new ObjectInputStream(this.sockfd.getInputStream()); //input for objects
             this.logged = true;
         }catch(IOException e){
-            System.err.println("IOError!");
+            System.err.println("IOError from "+sockfd.getInetAddress().getHostAddress()+": "+e);
+        }
+    }
+    
+    private void endThread(){
+        try{
+            in.close();
+            oin.close();
+            out.close();
+            oout.close();
+            sockfd.close();
+            return;
+        }catch(IOException e){
+            
         }
     }
     
@@ -71,7 +86,7 @@ public class Server  implements Runnable{
         boolean cmdAvail = false;
         String tmp;
         try{
-            //this.out.write("!OK!");
+//            this.out.write("!OK!");
             this.oout.writeObject((String)"!OK!");
             this.luser = (User)oin.readObject(); // odczyt obiektu użytkownika od klienta        
             boolean uok = checkUser(); // sprawdzenie użytkownika
@@ -86,7 +101,7 @@ public class Server  implements Runnable{
                 System.exit(-1);
             }
             tmp = (String)oin.readObject();
-            ObjectInputStream we = new ObjectInputStream(new FileInputStream("movies.db"));
+            ObjectInputStream we = new ObjectInputStream(new FileInputStream("Shows.kin"));
 //            File fil = (File)oin.readObject();
 //            ObjectInputStream we2 = new ObjectInputStream(new FileInputStream(fil));
 //            ObjectOutputStream wyyy = new ObjectOutputStream(new FileOutputStream("mov.db"));
@@ -94,21 +109,29 @@ public class Server  implements Runnable{
             switch (tmp) {
                 case "!GETMOV!":
                     this.oout.writeObject((String)"!OK!");
-                    this.oout.writeObject(we);
-                    //this.oout.writeObject(MoviesDB);
+//                    System.out.println("Debug pre");
+                    String date = (String)we.readObject();
+//                    System.out.println("Debug pre");
+//                    int cnt = (Integer)we.readObject();
+                    System.out.println("Debug pre");
+//                    Show[] ssstmp = (Show[])we.readObject();
+                    List<Show> ssstmp = (ArrayList<Show>)we.readObject();
+//                    System.out.println("Debug pre");
+                    this.oout.writeObject(ssstmp);
+//                    System.out.println("Debug post");
+//                    this.oout.writeObject(MoviesDB);
                     break;
                 case "!GETMOVDT!":
                     tmp = (String)oin.readObject();
                     String dbDate = (String)we.readObject();
                     if(tmp.equals(dbDate)) this.oout.writeObject((String)"!MOVOK!");
                     else { this.oout.writeObject((String)"!MOVUPD!"); this.oout.writeObject(we); }
-                    //if(tmp.equals(newestDBdate)) this.out.write("!MOVOK!");
-                    //else{ this.out.write("!MOVUPD!"); this.oout.writeObject(MoviesDB); }
+//                    if(tmp.equals(newestDBdate)) this.out.write("!MOVOK!");
+//                    else{ this.out.write("!MOVUPD!"); this.oout.writeObject(MoviesDB); }
                     break;
             }
             while(!tmp.equals("!RDY!")){
-                tmp = (String)oin.readObject();                
-                this.oout.writeObject((String)"Waiting for RDY command...");
+                tmp = (String)oin.readObject();
             }
             this.oout.writeObject((String)"!RDY!");            
             while (this.logged){
@@ -116,7 +139,8 @@ public class Server  implements Runnable{
                     String data = (String)oin.readObject();
                     switch (data) {
                         case "!CMD!":
-                            //jeśli klient wysyła komendę
+//                            jeśli klient wysyła komendę
+                            this.oout.writeObject((String)"!OK!");
                             cmdAvail = true;
                             break;
                         case "!OK!":
@@ -138,17 +162,20 @@ public class Server  implements Runnable{
                     cmdAvail = false;
                 }
             }
-            in.close();
-            oin.close();
-            out.close();
-            oout.close();
+            this.endThread();
         }catch(IOException e){
-            System.err.println("IOError: "+e);
+            System.err.println("IOError from "+sockfd.getInetAddress().getHostAddress()+": "+e);
+            this.endThread();
         }catch(ClassNotFoundException e){
-            System.err.println("Class not found: "+e);
+            System.err.println("Class not found from "+sockfd.getInetAddress().getHostAddress()+": "+e);
         }
     }
     
+    /**
+     * Metoda sprawdzająca czy zalogowany użytkownik ma prawo do wykonania danej komendy
+     * @param cmd identyfikator komendy 
+     * @return true - jeśli dany użytkownik ma uprawnienia do wykonania, false - jeśli nie
+     */
     public boolean checkGrants(int cmd){
         if(cmd < 0) return true;
         for(int i=0;i<12;i++){
@@ -159,6 +186,10 @@ public class Server  implements Runnable{
         return false;
     }
     
+    /**
+     * Metoda wykonująca komendę podaną przez użytkownika
+     * @param cmd identyfikator komendy
+     */
     public void processCmd(int cmd){
         switch(cmd){
             case -1 : {
@@ -188,27 +219,41 @@ public class Server  implements Runnable{
                     if(tmp.equals("!OK!"))
                         this.oout.writeObject((String)"!NAZW!");
                         String nazwa = (String)oin.readObject();
-                        this.oout.writeObject((String)"!OK!");
                         this.oout.writeObject((String)"!SEANS!");
                         int showid = (Integer)oin.readObject();
-                        this.oout.writeObject((String)"!OK!");
                         this.oout.writeObject((String)"!MIEJSC!");
                         int[] seat = (int[])oin.readObject();
                         Res res = new Res(nazwa,showid,seat);
                     synchronized (this){
                         try{
-                            ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
-                            int num = (Integer)we.readObject();
-                            Res ares[] = new Res[num+1];
-                            ares = (Res[])we.readObject();
-                            we.close();
-                            ares[num+1] = res;
+                            File r = new File("Res.kin");
+                            Res ares[];
+                            List<Res> reslist = new ArrayList<Res>();
+                            int num = 0;
+                            if(!r.exists()){
+                                r.createNewFile();
+//                                ares = new Res[1];
+//                                ares[0] = res;
+                                reslist.add(res);
+                            }else{
+                                ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
+//                                num = (Integer)we.readObject();
+//                                ares= new Res[num+1];
+//                                System.out.println(num+1);
+//                                ares = (Res[])we.readObject();
+                                reslist = (ArrayList<Res>)we.readObject();
+                                we.close();
+//                                System.out.println(ares.length);
+//                                ares[num] = res;
+                                reslist.add(res);
+                            }
                             ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream("Res.kin"));
-                            wy.writeObject(num+1);
-                            wy.writeObject(ares);
+//                            wy.writeObject(num+1);
+//                            wy.writeObject(ares);
+                            wy.writeObject(reslist);
                             wy.close();
                         }catch(IOException e){
-                            System.err.println("IO Error: "+e);
+                            System.err.println("IO Error from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                         }
                     }
                 }catch(IOException e){
@@ -221,36 +266,54 @@ public class Server  implements Runnable{
             case 6:{// potwierdzenie rezerwacji
                 try{
                     this.oout.writeObject((String)"!GDATA!");
-                    String tmp = (String)oin.readObject();
-                    if(tmp.equals("!OK!"))
+                    String tmp = (String)oin.readObject();                   
+//                    Res ares[];
+                    List<Res> reslist = new ArrayList<Res>();
+                    if(tmp.equals("!OK!")){
+                        File r = new File("Res.kin");
+                            if(!r.exists()){
+                                r.createNewFile();
+                            }
+                         synchronized(this){
+                            ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
+//                            int num = (Integer)we.readObject();
+//                            ares = new Res[num];
+//                            ares = (Res[])we.readObject();
+                            reslist = (ArrayList<Res>)we.readObject();
+                            we.close();
+                         }
+//                        this.oout.writeObject((Res[])ares);
+                         Res restmp[] = new Res[reslist.size()];
+                         restmp = reslist.toArray(restmp);
+                         this.oout.writeObject((Res[])restmp);
                         this.oout.writeObject((String)"!GORES!"); // Get Object Res
                         Res res = (Res)oin.readObject();
                         synchronized(this){
-                            ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
-                            int num = (Integer)we.readObject();
-                            Res ares[] = new Res[num];
-                            ares = (Res[])we.readObject();
-                            we.close();
                             boolean acc = false;
-                            for (int i = 0;i<ares.length;i++){
-                                if(ares[i].equals(res)){
-                                    ares[i].accept();
+//                            for (int i = 0;i<ares.length;i++){
+//                                if(ares[i].equals(res)){
+//                                    ares[i].accept();
+                            for(int i =0;i<reslist.size();i++){
+                                if(reslist.get(i).equals(res)){
+                                    reslist.get(i).accept();
                                     acc = true;
                                     break;
                                 }
                             }
                             if(acc){
                                 ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream("Res.kin"));
-                                wy.writeObject(ares.length);
-                                wy.writeObject(ares);
+//                                wy.writeObject(ares.length);
+//                                wy.writeObject(ares);
+                                wy.writeObject(reslist);
                                 wy.close();
                                 this.oout.writeObject((String)"!OK!");
                             }else this.oout.writeObject((String)"!NORES!");
                         }
+                    }
                 }catch(IOException e){
-                    System.err.println("IO Error: "+e);
+                    System.err.println("IO Error from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                 }catch(ClassNotFoundException e){
-                    System.err.println("Class not found :"+e);
+                    System.err.println("Class not found from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                 }
                 break;
             }
@@ -258,35 +321,54 @@ public class Server  implements Runnable{
                 try{
                     this.oout.writeObject((String)"!GDATA!");
                     String tmp = (String)oin.readObject();
-                    if(tmp.equals("!OK!"))
-                        this.oout.writeObject((String)"!GORES!"); // Get Object Res
-                        Res res = (Res)oin.readObject();
+//                    Res ares[];
+                    List<Res> reslist = new ArrayList<Res>();
+                    if(tmp.equals("!OK!")){
+                        File r = new File("Res.kin");
+                            if(!r.exists()){
+                                r.createNewFile();
+                            }
                         synchronized(this){
                             ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
-                            int num = (Integer)we.readObject();
-                            Res ares[] = new Res[num];
-                            ares = (Res[])we.readObject();
+//                            int num = (Integer)we.readObject();
+//                            ares = new Res[num];
+//                            ares = (Res[])we.readObject();
+                            reslist = (ArrayList<Res>)we.readObject();
                             we.close();
+                         }
+//                        this.oout.writeObject((Res[])ares);
+                        Res restmp[] = new Res[reslist.size()];
+                        restmp = reslist.toArray(restmp);
+                        this.oout.writeObject((Res[])restmp);
+                        this.oout.writeObject((String)"!GORES!"); // Get Object Res
+                        Res res = (Res)oin.readObject();
+                        synchronized(this){                            
                             boolean ok = false;
-                            for (int i = 0;i<ares.length;i++){
-                                if(ares[i].equals(res)){
-                                    ares[i].get();
+//                            for (int i = 0;i<ares.length;i++){
+//                                if(ares[i].equals(res)){
+//                                    ares[i].get();
+                            for(int i = 0;i<reslist.size();i++){
+                                if(reslist.get(i).equals(res)){
+                                    reslist.get(i).get();
+                                    System.out.println(i);
                                     ok = true;
                                     break;
                                 }
                             }
                             if(ok){
                                 ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream("Res.kin"));
-                                wy.writeObject(ares.length);
-                                wy.writeObject(ares);
+//                                wy.writeObject(ares.length);
+//                                wy.writeObject(ares);
+                                wy.writeObject(reslist);
                                 wy.close();                                
                                 this.oout.writeObject((String)"!OK!");
                             }else this.oout.writeObject((String)"!NORES!");
                         }
+                    }
                 }catch(IOException e){
-                    System.err.println("IO Error: "+e);
+                    System.err.println("IO Error from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                 }catch(ClassNotFoundException e){
-                    System.err.println("Class not found :"+e);
+                    System.err.println("Class not found from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                 }
                 break;
             }
@@ -294,44 +376,66 @@ public class Server  implements Runnable{
                 try{
                     this.oout.writeObject((String)"!GDATA!");
                     String tmps = (String)oin.readObject();
-                    if(tmps.equals("!OK!"))
-                         this.oout.writeObject((String)"!GORES!"); // Get Object Res
+//                    Res ares[];
+                    List<Res> reslist = new ArrayList<Res>();
+                    if(tmps.equals("!OK!")){
+                        File r = new File("Res.kin");
+                            if(!r.exists()){
+                                r.createNewFile();
+                            }
+                         synchronized(this){
+                            ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
+//                            int num = (Integer)we.readObject();
+//                            ares = new Res[num];
+//                            ares = (Res[])we.readObject();
+                            reslist = (ArrayList<Res>)we.readObject();
+                            we.close();
+                         }
+//                        this.oout.writeObject((Res[])ares);
+                        Res restmp[] = new Res[reslist.size()];
+                        restmp = reslist.toArray(restmp);
+                        this.oout.writeObject((Res[])restmp);
+                        this.oout.writeObject((String)"!GORES!"); // Get Object Res
                         Res res = (Res)oin.readObject();
                         synchronized(this){
-                            ObjectInputStream we = new ObjectInputStream(new FileInputStream("Res.kin"));
-                            int num = (Integer)we.readObject();
-                            Res ares[] = new Res[num];
-                            ares = (Res[])we.readObject();
-                            we.close();
                             int tmp = -254;
-                            for (int i = 0;i<ares.length;i++){
-                                if(ares[i].equals(res)){
+//                            for (int i = 0;i<ares.length;i++){
+//                                if(ares[i].equals(res)){
+//                                    tmp = i;
+//                                    break;
+//                                }
+                            for(int i = 0;i<reslist.size();i++){
+                               if(reslist.get(i).equals(res)){
                                     tmp = i;
+                                    reslist.remove(i);
                                     break;
                                 }
                             }
                             if(tmp>-1){
                                 
-                                int len = ares.length;
-                                Res arestmp[] = new Res[len];
-                                System.arraycopy(ares,0,arestmp,0,len);
-                                for(int i = tmp;i<arestmp.length-1;i++){
-                                    arestmp[i] = arestmp[i+1];
-                                }
-                                ares = new Res[len-1];
-                                System.arraycopy(arestmp,0,ares,0,len-1);
+//                                int len = ares.length;
+//                                Res arestmp[] = new Res[len];
+//                                System.arraycopy(ares,0,arestmp,0,len);
+//                                for(int i = tmp;i<arestmp.length-1;i++){
+//                                    arestmp[i] = arestmp[i+1];
+//                                }
+//                                ares = new Res[len-1];
+//                                System.arraycopy(arestmp,0,ares,0,len-1);
+                                
                                 
                                 ObjectOutputStream wy = new ObjectOutputStream(new FileOutputStream("Res.kin"));
-                                wy.writeObject(ares.length);
-                                wy.writeObject(ares);
+//                                wy.writeObject(ares.length);
+//                                wy.writeObject(ares);
+                                wy.writeObject(reslist);
                                 wy.close();                                
                                  this.oout.writeObject((String)"!OK!");
                             }else  this.oout.writeObject((String)"!NORES!");
                         }
+                    }
                 }catch(IOException e){
-                    System.err.println("IO Error: "+e);
+                    System.err.println("IO Error from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                 }catch(ClassNotFoundException e){
-                    System.err.println("Class not found :"+e);
+                    System.err.println("Class not found from "+sockfd.getInetAddress().getHostAddress()+": "+e);
                 }
                 break;
             }
@@ -366,7 +470,9 @@ public class Server  implements Runnable{
             //BufferedReader userfile = new BufferedReader(new InputStreamReader(new FileInputStream("users.txt")));
             ObjectInputStream we = new ObjectInputStream(new FileInputStream("Users.kin"));
             try {
-                User[] tmp = (User[])we.readObject();
+                List<User> ar = (ArrayList<User>)we.readObject();
+                User[] tmp = ar.toArray(new User[]{}); 
+                //User[] tmp = (User[])we.readObject();
                 we.close();
                 int ctmp = 0;
                 for(int i=0;i<tmp.length;i++){
@@ -378,16 +484,13 @@ public class Server  implements Runnable{
                 if(pwd.equals(tmp[ctmp].getPass())){
                     log = true;
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException e) {
+                System.err.println("ClassNotFoundException from "+sockfd.getInetAddress().getHostAddress()+": "+e);
             }
         }catch(IOException e){
-            System.err.println("IO Error");
+            System.err.println("IO Error from "+sockfd.getInetAddress().getHostAddress()+": "+e);
         }
         return log;
-    }
-    public void sendResp(){
-        
     }
     private Object getObj(String file){
         try{
@@ -395,7 +498,7 @@ public class Server  implements Runnable{
             Object obj = we.readObject();
             return obj;
         }catch(IOException e){
-            System.err.println("BÅ‚Ä…d odczytu pliku");
+            System.err.println("Błąd odczytu pliku");
         }catch(ClassNotFoundException c){
             System.err.println("Brak klasy Object xD");
         } 

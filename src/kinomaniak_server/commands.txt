@@ -13,15 +13,15 @@
 666 - nowy użytkownik
 667 - usuń użytkownika
 ------------------------------------
-Struktura pliku bazy filmów:
+Struktura pliku bazy filmów:  !!!!! ZMIANA !!!!!!
 (String)<data_utworzenia>
-(Integer)<ilosc_seansow>
+<--(Integer)<ilosc_seansow>--> brak tego pola w strukturze
 (Show[])<tablica_seansów>
 zapis np.:
 (zakładamy, że in to wejście ObjectInputStream, out ObjectOutputStream)
 (oraz, że db to Show[num])
 out.writeObject((String)"10-10-2010");
-out.writeObject((Integer)num);
+//out.writeObject((Integer)num);
 out.writeObject(db); //zapisując Show, zapisujemy również zawarty w nim Movie/CRoom/Time (wszystkie muszą implementować Serializable)
 
 odczyt:

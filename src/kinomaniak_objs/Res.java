@@ -5,6 +5,8 @@
 package kinomaniak_objs;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  *
@@ -12,7 +14,7 @@ import java.io.Serializable;
  */
 public class Res implements Serializable{
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
    
     private String imienazwisko;
     private int showid;
@@ -34,6 +36,30 @@ public class Res implements Serializable{
         this.checked = false;
         this.ok = false;
     }
+    
+    @Override
+    public boolean equals(Object obj){
+        boolean isEqual = false;
+        if (this.getClass() == obj.getClass())
+        {
+            Res res = (Res) obj;
+            if ((res.imienazwisko).equals(this.imienazwisko) && Arrays.equals(res.seat, this.seat) && res.showid == this.showid) {
+                System.out.println("equals");
+                isEqual = true;
+            }
+        } 
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.imienazwisko);
+        hash = 59 * hash + this.showid;
+        hash = 59 * hash + Arrays.hashCode(this.seat);
+        return hash;
+    }
+
     /**
      * akceptacja rezerwacji
      */
