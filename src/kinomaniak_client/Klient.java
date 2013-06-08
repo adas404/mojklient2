@@ -179,7 +179,7 @@ public class Klient {
           Res res = null;  
         for (int i=0;i<rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(tmp)){
-                 res = new Res(tmp,rezerwacje[i].getShowID(),rezerwacje[i].getSeat());
+                 res = rezerwacje[i];
                  break;
              }
          } 
@@ -200,7 +200,7 @@ public class Klient {
              in.close();
              oin.close();
              oout.close();
-             out.close();
+          //   out.close();
          } catch(IOException e){
               System.err.println("IOError!");        
          
