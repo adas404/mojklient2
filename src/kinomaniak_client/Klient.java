@@ -286,6 +286,7 @@ public class Klient {
             if(tmp.equals("!RDY!")){
                 System.out.println("Serwer gotowy do pracy!");
             }
+            while(true){
             int tmp3 = Integer.parseInt(menu());
             wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
@@ -313,8 +314,9 @@ public class Klient {
                     break;
                 }
            }
-            
-        rozlacz();
+            tmp = (String)odbierzO();
+            }
+//        rozlacz();
      }
 }  
 
