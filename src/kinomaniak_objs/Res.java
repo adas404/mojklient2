@@ -7,29 +7,44 @@ package kinomaniak_objs;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
-
+// !!!!! MOŻLIWOŚĆ REZERWACJI KILKU MIEJSC !!!!!
 /**
  *
  * @author qbass
  */
 public class Res implements Serializable{
     
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 4L;
    
     private String imienazwisko;
     private int showid;
-    private int[] seat;
+    private int[][] seat;
     private boolean checked; // potwierdzenie rezerwacji
     private boolean ok; // odebrana rezerwacja
     
     /**
-     * Klasa Rezerwacji danego seansu
+     * Konstruktor klasy Rezerwacji danego seansu dla pojedyńczego miejsca
      * @param nazwa nazwa/nazwisko klienta, który rezerwuje dany seans
      * @param id identyfikator rezerwowanego seansu
      * @param seat tablica dwóch liczb identyfikujących rząd oraz miejsce w danym rzędzie do zarezerwowania
      */
     public Res(String nazwa,int id, int[] seat){
-        this.seat = new int[2];
+        this.seat = new int[1][2];
+        this.imienazwisko = nazwa;
+        this.showid = id;
+        this.seat[0] = seat;
+        this.checked = false;
+        this.ok = false;
+    }
+    /**
+     * Konstruktor klasy Rezerwacji danego seansu dla kilku miejsc
+     * @param nazwa nazwa/nazwisko klienta, który rezerwuje dany seans
+     * @param id identyfikator rezerwowanego seansu
+     * @param ilosc ilość miejsc do rezerwacji
+     * @param seat tablica dwóch liczb identyfikujących rząd oraz miejsce w danym rzędzie do zarezerwowania dla każdego z 'ilosc' miejsc
+     */
+    public Res(String nazwa,int id,int ilosc, int[][] seat){
+        this.seat = new int[ilosc][2];
         this.imienazwisko = nazwa;
         this.showid = id;
         this.seat = seat;
@@ -43,7 +58,7 @@ public class Res implements Serializable{
         if (this.getClass() == obj.getClass())
         {
             Res res = (Res) obj;
-            if ((res.imienazwisko).equals(this.imienazwisko) && Arrays.equals(res.seat, this.seat) && res.showid == this.showid) {
+            if ((res.imienazwisko).equals(this.imienazwisko) && Arrays.deepEquals(this.seat, res.seat) && res.showid == this.showid) {
                 System.out.println("equals");
                 isEqual = true;
             }
@@ -65,6 +80,13 @@ public class Res implements Serializable{
      */
     public void accept(){
         this.checked = true;
+    }
+    /**
+     * sprawdzenie czy dana rezerwacja została potwierdzona przez użytkownika
+     * @return true jeśli potwierdzona
+     */
+    public boolean ischecked(){
+        return this.checked;
     }
     /**
      * odbiór rezerwacji
@@ -94,11 +116,18 @@ public class Res implements Serializable{
         return this.showid;
     }
     /**
-     * Metoda zwracająca tablicę identyfikującą dokładne miejsce rezerwacji
-     * @return int[] 
+     * Metoda zwracająca tablicę identyfikującą dokładne miejsca rezerwacji
+     * @return int[][] 
      */
-    public int[] getSeat(){
+    public int[][] getSeats(){
         return this.seat;
+    }
+    public String formatSeats(){
+        String tmp = "";
+        for(int s[] : this.getSeats()){
+            tmp += "Rząd: "+s[0]+" Miejsce: "+s[1]+"\n";
+        }
+        return tmp;
     }
     
 }

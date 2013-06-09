@@ -31,6 +31,7 @@ import kinomaniak_objs.User;
  * @author Adam
  */
 public class Klient {
+    private Show[] shss;
     // private Socket sockfd;
      private User luser;
      private PrintWriter out;  //wyjście tekstowe klienta
@@ -138,14 +139,26 @@ public class Klient {
           tmp = in.nextLine();
           wyslijO(Integer.parseInt(tmp));
       }
-      System.out.println("Podaj rząd w którym chcesz siedzieć:");
-      tmp = in.nextLine();
-      int[] tmpseat = new int[2];
-      tmpseat[0]=Integer.parseInt(tmp);
-      System.out.println("Podaj miejsce w rzędzie na którym chcesz siedzieć");
-      tmp = in.nextLine();
-      tmpseat[1] = Integer.parseInt(tmp);
+      System.out.println("Ilość miejsc do zarezerwowania: ");
+      int tmps = in.nextInt();
+      int[][] tmpseat = new int[tmps][2];
+      for(int i=0;i<tmps;i++){
+          System.out.print(i+". Podaj rząd w którym chcesz siedzieć: ");
+          tmpseat[i][0] = in.nextInt();
+          System.out.print(i+". Podaj miejsce w rzędzie na którym chcesz siedzieć: ");
+          tmpseat[i][1] = in.nextInt();
+      }
+      in.nextLine();
       wyslijO(tmpseat);
+          
+//      System.out.println("Podaj rząd w którym chcesz siedzieć:");
+//      tmp = in.nextLine();
+//      int[] tmpseat = new int[2];
+//      tmpseat[0]=Integer.parseInt(tmp);
+//      System.out.println("Podaj miejsce w rzędzie na którym chcesz siedzieć");
+//      tmp = in.nextLine();
+//      tmpseat[1] = Integer.parseInt(tmp);
+//      wyslijO(tmpseat);
       
       
      }
@@ -169,12 +182,13 @@ public class Klient {
          }else{
              wyslijO((String)"!OK!");
          }
-        
          Res[] rezerwacje = (Res[])odbierzO();
          for (int i=0;i<rezerwacje.length;i++){
-             System.out.println("Imie i nazwisko"+rezerwacje[i].getName());
-             System.out.println("Show ID:"+rezerwacje[i].getShowID());
-             System.out.println("Rząd"+rezerwacje[i].getSeat()[0]+"Miejsce"+rezerwacje[i].getSeat()[1]);
+             System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
+             System.out.println("Show ID: "+rezerwacje[i].getShowID());
+//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+"Miejsce"+rezerwacje[i].getSeats()[0][1]);
+//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+" Miejsce"+rezerwacje[i].getSeats()[1][0]);
+             System.out.println(rezerwacje[i].formatSeats());
          }
          System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
             tmp = in.nextLine();
@@ -215,7 +229,7 @@ public class Klient {
          if (tmp2.equals("!OK!")){//90-98
             try{    
                     List<Show> ar = (ArrayList<Show>)oin.readObject();
-                    Show[] shss = ar.toArray(new Show[]{});
+                    shss = ar.toArray(new Show[]{});
                    // Show[] sh = (Show[])oin.readObject();
                     wy = new ObjectOutputStream(new FileOutputStream("Shows.kin"));
                     Date dateNow = new Date (); 
@@ -227,7 +241,7 @@ public class Klient {
                     wy.writeObject(shss);
                     wy.close();
             }catch(IOException e){
-                System.err.println("IOException!");
+                System.err.println("IOException! "+e);
             }
          }
          

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author qbass
  */
 public class Show implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     
     private int showid;
     private Movie mov;
@@ -40,6 +40,25 @@ public class Show implements Serializable {
         tim[0] = this.time.getHour();
         tim[1] = this.time.getMinute();
         return tim;
+    }
+    public int[] getDate(){
+        int dt[] = new int[3];
+        dt[0] = this.time.getDay();
+        dt[1] = this.time.getMonth();
+        dt[2] = this.time.getYear();
+        return dt;
+    }
+    public String getFormattedDate(){
+        String tmp = this.getDate()[0]+"/"+this.getDate()[1]+"/"+this.getDate()[2];
+        return tmp;
+    }
+    public String getFormattedTime(){
+        String tmp = this.getTime()[0]+":"+this.getTime()[1];
+        return tmp;
+    }
+    public String getFormatted(){
+        String tmp = this.getFormattedDate()+" "+this.getFormattedTime();
+        return tmp;
     }
     /**
      *
