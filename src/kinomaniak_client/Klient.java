@@ -253,6 +253,30 @@ public class Klient {
              System.err.println("IOError "+e);
          }
      }
+     public String zwrocOpis(String mojstr) throws ClassNotFoundException{
+         String tmpstr = "NULL";
+         ObjectInputStream wel;
+         try{
+             wel = new ObjectInputStream(new FileInputStream("Shows.kin"));
+         //Show[] tmpstr = new (Show[]) wex.readObject;
+          ArrayList<Res> reslist = (ArrayList<Res>)wel.readObject();
+          Show[] tmpshss = reslist.toArray(new Show[]{});
+          for (int i=0;i<=tmpshss.length;i++){
+              if(tmpshss[i].getMovie().getName().equals(mojstr)) {
+                  tmpstr = tmpshss[i].getMovie().getDesc();
+                  break;
+              }
+          }
+              wel.close();
+         }
+          catch(IOException e){
+              System.err.println("IOExce");
+          }
+         
+         return tmpstr;
+         
+         
+     }
      public void dzialaj() throws ClassNotFoundException{
        // String tmp;
         tmp =(String) odbierzO();
@@ -308,7 +332,7 @@ public class Klient {
             if(tmp.equals("!RDY!")){
                 System.out.println("Serwer gotowy do pracy!");
                 flush();
-            }
+             }
             while(true){
             flush();
             wyslijO((String)"!CMD!");
@@ -337,6 +361,10 @@ public class Klient {
                 case 8:{
                     potwierdzOdbierzRezerwacje("ODBIERZ");
                     break;
+                
+                }
+                case 9:{
+                    System.out.println(zwrocOpis("Superman"));
                 }
            }
             tmp = (String)odbierzO();
