@@ -256,14 +256,21 @@ public class Klient {
      public String zwrocOpis(String mojstr) throws ClassNotFoundException{
          String tmpstr = "NULL";
          ObjectInputStream wel;
+         Show[] tmpshss;
          try{
              wel = new ObjectInputStream(new FileInputStream("Shows.kin"));
          //Show[] tmpstr = new (Show[]) wex.readObject;
-          ArrayList<Res> reslist = (ArrayList<Res>)wel.readObject();
-          Show[] tmpshss = reslist.toArray(new Show[]{});
+          tmpstr = (String)wel.readObject();
+          int tmpint = (Integer)wel.readObject();
+          System.out.println("tmpint"+tmpint);
+          tmpshss = (Show[]) we.readObject();
+          System.out.println("deb");
+         // ArrayList<Res> reslist = (ArrayList<Res>)wel.readObject();
+         //Show[] tmpshss = reslist.toArray(new Show[]{});
           for (int i=0;i<=tmpshss.length;i++){
               if(tmpshss[i].getMovie().getName().equals(mojstr)) {
                   tmpstr = tmpshss[i].getMovie().getDesc();
+                  System.out.println("Przeszukiwanie");
                   break;
               }
           }
@@ -365,6 +372,7 @@ public class Klient {
                 }
                 case 9:{
                     System.out.println(zwrocOpis("Superman"));
+                    break;
                 }
            }
             tmp = (String)odbierzO();
