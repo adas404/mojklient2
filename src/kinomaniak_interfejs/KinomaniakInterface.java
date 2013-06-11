@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kinomaniak2;
+package kinomaniak_interfejs;
 
 /**
  *
@@ -11,7 +11,7 @@ package kinomaniak2;
 public interface KinomaniakInterface {
     
     //przekazuja login i pass do sprawdzenia klientowi
-        public String setLogin(int log);
+        public String setLogin(String log);
         public String setHaslo(int pas);
     //
         

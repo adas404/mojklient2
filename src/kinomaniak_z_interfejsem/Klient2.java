@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kinomaniak_client;
+package kinomaniak_z_interfejsem;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,7 +31,7 @@ import kinomaniak_interfejs.*;
  *
  * @author Adam
  */
-public class Klient {
+public class Klient2 implements KinomaniakInterface {
     private Show[] shss;
     // private Socket sockfd;
      private User luser;
@@ -51,7 +51,7 @@ public class Klient {
      File f = null;
     
      
-     public Klient (){
+     public Klient2  (){
         // this.socket=socket;
           try{
             InetAddress addr = InetAddress.getByName("localhost");
@@ -66,7 +66,15 @@ public class Klient {
            
         }
     }
-   
+    @Override 
+    public String setLogin(String log){
+       return log;
+    }
+    @Override
+    public String setHaslo(String pas){
+        return pas;
+    }
+    
      public void wyslijT(String tmp) {
       try{ 
           this.out.write(tmp);
@@ -291,9 +299,9 @@ public class Klient {
             System.exit(-1);
           }
         System.out.println("Podaj użytkownika:");
-        String username = in.nextLine();
+        String username = setLogin();
         System.out.println("Podaj hasło");
-        String pass = in.nextLine();
+        String pass = setHaslo();
         luser =new User(username,pass,1);
         //User user = new User(username,pass,1);
         wyslijO(luser);
