@@ -66,15 +66,16 @@ public class Klient2 implements KinomaniakInterface {
            
         }
     }
+     /**
+      * 
+      * @param log
+      * @return 
+      */
     @Override 
     public String setLogin(String log){
        return log;
     }
-    @Override
-    public String setHaslo(String pas){
-        return pas;
-    }
-    
+       
      public void wyslijT(String tmp) {
       try{ 
           this.out.write(tmp);
@@ -98,7 +99,10 @@ public class Klient2 implements KinomaniakInterface {
       }
       
     }
-    
+    /**
+     * 
+     * @param object 
+     */
      public void wyslijO(Object object){
         try{
             this.oout.writeObject(object);

@@ -12,15 +12,15 @@ public interface KinomaniakInterface {
     
     //przekazuja login i pass do sprawdzenia klientowi
         public String setLogin(String log);
-        public String setHaslo(int pas);
+        public String setHaslo(String pas);
     //
-        
+//        public int setLogin(String log,String pas);
         public void connect(); // wlasnie nie wiem jak to zalatwic, ale fajnie by bylo gdyby tutaj lączyl z serwerem, pobierał bazę i wchodzil do gotowości
-        
+        //metoda dzialaj do while
    //przechodzenie do kolejno: rezerwacji, anulowania, odbioru
-        public void goToReserve();
+        public void goToReserve(); // dalej wywoluje sety
         public void goToCancelRes();
-        public void goToGetRes();
+        public void goToGetRes(); //
     //
         
     //zwracanie danych rezerwacji dla gui    
