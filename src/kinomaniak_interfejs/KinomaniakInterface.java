@@ -14,7 +14,7 @@ public interface KinomaniakInterface {
    
         public int setLogin(String log,String pas);
       //
-        public void connect(); // wlasnie nie wiem jak to zalatwic, ale fajnie by bylo gdyby tutaj lączyl z serwerem, pobierał bazę i wchodzil do gotowości
+        public int connect(); // wlasnie nie wiem jak to zalatwic, ale fajnie by bylo gdyby tutaj lączyl z serwerem, pobierał bazę i wchodzil do gotowości
         //metoda dzialaj do while
    //przechodzenie do kolejno: rezerwacji, anulowania, odbioru
         public void goToReserve(); // dalej wywoluje sety

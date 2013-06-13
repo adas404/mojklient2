@@ -51,8 +51,8 @@ public class Klient2 implements KinomaniakInterface {
      File f = null;
     
      
-     public Klient2  (){
-        // this.socket=socket;
+    
+     private void init(){
           try{
             InetAddress addr = InetAddress.getByName("localhost");
             socket = new Socket(addr, PORT);
@@ -64,18 +64,49 @@ public class Klient2 implements KinomaniakInterface {
             }catch(IOException e){
             System.err.println("IOErrorr!");
            
+            }
         }
-    }
-     /**
-      * 
-      * @param log
-      * @return 
-      */
-    @Override 
-    public String setLogin(String log){
-       return log;
-    }
-       
+     @Override
+     public int connect(){
+        tmp =(String) odbierzO();
+        System.out.println(tmp);
+        if (!tmp.equals("!OK!")){
+            System.err.println("Błąd połączenia");
+            rozlacz();
+          }
+        
+      
+        //User user = new User(username,pass,1);
+        wyslijO(luser);
+        tmp = (String) odbierzO();
+        System.out.println(tmp);
+        if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
+            System.err.println("Błąd logowania!");
+            rozlacz();
+          }  
+        System.out.println("Pobieram baze!");
+        try {
+            pobierzBaze();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Klient2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        wyslijO((String)"!RDY!");
+            tmp = (String) odbierzO();
+           // System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
+            if(tmp.equals("!RDY!")){
+                System.out.println("Serwer gotowy do pracy!");
+                flush();
+             }
+      return 0;  
+     }
+     
+     @Override
+     public int setLogin(String log,String pas){
+         luser = new User(log,pas,1);
+         connect();
+         return 0;
+     }
+           
      public void wyslijT(String tmp) {
       try{ 
           this.out.write(tmp);
@@ -222,7 +253,7 @@ public class Klient2 implements KinomaniakInterface {
         wyslijO((Res)res);
      }
      
-     public void rozlacz() {
+     private void rozlacz() {
        
          try{
              socket.close();
@@ -236,7 +267,7 @@ public class Klient2 implements KinomaniakInterface {
      }
   }
 @SuppressWarnings("unchecked")
-     public void pobierzBaze() throws ClassNotFoundException{
+     private void pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
          tmp2 =(String) odbierzO();
          if (tmp2.equals("!OK!")){//90-98
@@ -295,27 +326,7 @@ public class Klient2 implements KinomaniakInterface {
      }
      public void dzialaj() throws ClassNotFoundException{
        // String tmp;
-        tmp =(String) odbierzO();
-        System.out.println(tmp);
-        if (!tmp.equals("!OK!")){
-            System.err.println("Błąd połączenia");
-            rozlacz();
-            System.exit(-1);
-          }
-        System.out.println("Podaj użytkownika:");
-        String username = setLogin();
-        System.out.println("Podaj hasło");
-        String pass = setHaslo();
-        luser =new User(username,pass,1);
-        //User user = new User(username,pass,1);
-        wyslijO(luser);
-        tmp = (String) odbierzO();
-        System.out.println(tmp);
-        if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
-            System.err.println("Błąd logowania!");
-            rozlacz();
-            System.exit(-1);
-          }
+       
        //    f = new File("Shows.kin");
      
      /*   if (f.exists()) { //jeśli to nie zadziała otworzymy nowy strumień i damy wyjątek file not found
@@ -337,18 +348,11 @@ public class Klient2 implements KinomaniakInterface {
           }  
             
         } else {*/
-            System.out.println("Pobieram baze!");
-            pobierzBaze();
+            
       //  }
             
         //sekcja gotowość do pracy!
-            wyslijO((String)"!RDY!");
-            tmp = (String) odbierzO();
-           // System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
-            if(tmp.equals("!RDY!")){
-                System.out.println("Serwer gotowy do pracy!");
-                flush();
-             }
+            
             while(true){
             flush();
             wyslijO((String)"!CMD!");
