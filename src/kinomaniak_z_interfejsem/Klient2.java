@@ -49,6 +49,8 @@ public class Klient2 implements KinomaniakInterface {
      ObjectInputStream we;
      ObjectOutputStream wy;
      File f = null;
+     String imie_i_nazwisko;
+     int id_seansu;
      //skasować
      int[] ksk= new int[2]; 
      Res res = new Res("costam",0,ksk);
@@ -77,7 +79,7 @@ public class Klient2 implements KinomaniakInterface {
         if (!tmp.equals("!OK!")){
             System.err.println("Błąd połączenia");
             rozlacz();
-            return -1;
+            return -1; //jak błąd połączenia
           }
         
       
@@ -88,7 +90,7 @@ public class Klient2 implements KinomaniakInterface {
         if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
             System.err.println("Błąd logowania!");
             rozlacz();
-            return -2;
+            return -2;// jak błąd logowania
           }  
         System.out.println("Pobieram baze!");
         try {
@@ -103,11 +105,53 @@ public class Klient2 implements KinomaniakInterface {
                 System.out.println("Serwer gotowy do pracy!");
                 flush();
              }
-      return 0;  
+      return 0;  //jak oki
      }
      
      @Override
-     public int goToReserve(){
+     public String setImieNazw(String imnaz){
+         return imnaz;
+     }
+     @Override 
+     public int setIdSeansu(int idse){
+         return idse;
+     }
+     @Override
+     public int[][] setMiejsca(int[][] miejsca){
+         return miejsca;
+     }
+     @Override
+     public int goToReserve(int ilosc_miejsc){
+      tmp =(String) odbierzO();
+      if (!tmp.equals("!GDATA!")){
+          System.out.println("Błąd serwera, oczekiwano !Gdata!");
+          rozlacz();
+          return -1;
+      }
+      wyslijO((String)"!OK!");
+      tmp=(String)odbierzO();
+      if (tmp.equals("!NAZW!")){
+          System.out.println("Podaj imie i nazwisko:");
+          tmp = in.nextLine();
+          wyslijO(setImieNazw());
+      }
+      tmp=(String)odbierzO();
+      if (tmp.equals("!SEANS!")){
+          System.out.println("Podaj ID SEANSU:");
+          tmp = in.nextLine();
+          wyslijO(Integer.parseInt(tmp));
+      }
+      System.out.println("Ilość miejsc do zarezerwowania: ");
+      int tmps = in.nextInt();
+      int[][] tmpseat = new int[tmps][2];
+      for(int i=0;i<tmps;i++){
+          System.out.print(i+". Podaj rząd w którym chcesz siedzieć: ");
+          tmpseat[i][0] = in.nextInt();
+          System.out.print(i+". Podaj miejsce w rzędzie na którym chcesz siedzieć: ");
+          tmpseat[i][1] = in.nextInt();
+      }
+      in.nextLine();
+      wyslijO(tmpseat);
          return 0;
      }
      @Override
@@ -121,22 +165,6 @@ public class Klient2 implements KinomaniakInterface {
      @Override
      public Res getRezerwacja(){
          return res;
-     }
-     @Override
-     public String setImieNazw(String imnaz){
-         return imnaz;
-     }
-     @Override 
-     public int setIdSeansu(int idse){
-         return idse;
-     }
-     @Override 
-     public int setRzad(int rz){
-         return rz;
-     }
-     @Override
-     public int setNrMiejsca(int mie){
-         return mie;
      }
      @Override
      public int czyZajete(int rz, int mie){
@@ -206,37 +234,7 @@ public class Klient2 implements KinomaniakInterface {
      }
      
      public void rezerwujBilet(){
-      System.out.println("Wybrałeś opcję rezerwacji biletu");
-      tmp =(String) odbierzO();
-      if (!tmp.equals("!GDATA!")){
-          System.out.println("Błąd serwera, oczekiwano !Gdata!");
-          rozlacz();
-          System.exit(-1);
-      }
-      wyslijO((String)"!OK!");
-      tmp=(String)odbierzO();
-      if (tmp.equals("!NAZW!")){
-          System.out.println("Podaj imie i nazwisko:");
-          tmp = in.nextLine();
-          wyslijO(tmp);
-      }
-      tmp=(String)odbierzO();
-      if (tmp.equals("!SEANS!")){
-          System.out.println("Podaj ID SEANSU:");
-          tmp = in.nextLine();
-          wyslijO(Integer.parseInt(tmp));
-      }
-      System.out.println("Ilość miejsc do zarezerwowania: ");
-      int tmps = in.nextInt();
-      int[][] tmpseat = new int[tmps][2];
-      for(int i=0;i<tmps;i++){
-          System.out.print(i+". Podaj rząd w którym chcesz siedzieć: ");
-          tmpseat[i][0] = in.nextInt();
-          System.out.print(i+". Podaj miejsce w rzędzie na którym chcesz siedzieć: ");
-          tmpseat[i][1] = in.nextInt();
-      }
-      in.nextLine();
-      wyslijO(tmpseat);
+      
           
 //      System.out.println("Podaj rząd w którym chcesz siedzieć:");
 //      tmp = in.nextLine();
