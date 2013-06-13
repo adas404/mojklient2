@@ -49,6 +49,9 @@ public class Klient2 implements KinomaniakInterface {
      ObjectInputStream we;
      ObjectOutputStream wy;
      File f = null;
+     //skasować
+     int[] ksk= new int[2]; 
+     Res res = new Res("costam",0,ksk);
     
      
     
@@ -104,8 +107,40 @@ public class Klient2 implements KinomaniakInterface {
      }
      
      @Override
-     public void goToReserve(){
-         
+     public int goToReserve(){
+         return 0;
+     }
+     @Override
+     public int goToCancelRes(){
+        return 0; 
+     }
+     @Override
+     public int goToGetRes(){
+         return 0;
+     }
+     @Override
+     public Res getRezerwacja(){
+         return res;
+     }
+     @Override
+     public String setImieNazw(String imnaz){
+         return imnaz;
+     }
+     @Override 
+     public int setIdSeansu(int idse){
+         return idse;
+     }
+     @Override 
+     public int setRzad(int rz){
+         return rz;
+     }
+     @Override
+     public int setNrMiejsca(int mie){
+         return mie;
+     }
+     @Override
+     public int czyZajete(int rz, int mie){
+         return rz;
      }
      
      @Override
