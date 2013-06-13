@@ -51,6 +51,7 @@ public class Klient2 implements KinomaniakInterface {
      File f = null;
      String imie_i_nazwisko;
      int id_seansu;
+     int[][] tmp_miejsca = new int[10][];
      //skasować
      int[] ksk= new int[2]; 
      Res res = new Res("costam",0,ksk);
@@ -109,16 +110,19 @@ public class Klient2 implements KinomaniakInterface {
      }
      
      @Override
-     public String setImieNazw(String imnaz){
-         return imnaz;
+     public int setImieNazw(String imnaz){ //trzeba to tak rozwiązać że wywołanie rezerwacji 
+         imie_i_nazwisko=imnaz;  //będzie wywoływało metode albo SetImieNazw albo SetMiejsca jak Ci lepiej Kuba
+         return 0;
      }
      @Override 
      public int setIdSeansu(int idse){
-         return idse;
+         id_seansu=idse;
+         return 0;
      }
      @Override
-     public int[][] setMiejsca(int[][] miejsca){
-         return miejsca;
+     public int setMiejsca(int[][] miejsca){
+         int[][] costam = new int[2][3];
+         return 0;
      }
      @Override
      public int goToReserve(int ilosc_miejsc){
@@ -128,6 +132,7 @@ public class Klient2 implements KinomaniakInterface {
           rozlacz();
           return -1;
       }
+      id_seansu=setMiejsca.costam[0][0];
       wyslijO((String)"!OK!");
       tmp=(String)odbierzO();
       if (tmp.equals("!NAZW!")){

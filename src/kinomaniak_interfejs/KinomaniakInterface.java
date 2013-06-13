@@ -29,9 +29,9 @@ public interface KinomaniakInterface {
     //
         
     //pobieranie danych rezerwacji z gui przez klienta    
-        public String setImieNazw(String imnaz);
+        public int setImieNazw(String imnaz);
         public int setIdSeansu(int idse);
-        public int[][] setMiejsca(int[][] miejsca);//jako miejsca[0][0] - rzad, miejsca[0][1] -miejsca, miejsca [1][0] -rzad itd.
+        public int setMiejsca(int[][] miejsca);//jako miejsca[0][0] - rzad, miejsca[0][1] -miejsca, miejsca [1][0] -rzad itd.
     //
         
     //wysylanie info do gui czy miejsce jest wolne
