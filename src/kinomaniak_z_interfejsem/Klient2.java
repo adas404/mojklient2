@@ -68,11 +68,13 @@ public class Klient2 implements KinomaniakInterface {
         }
      @Override
      public int connect(){
+         init();
         tmp =(String) odbierzO();
         System.out.println(tmp);
         if (!tmp.equals("!OK!")){
             System.err.println("Błąd połączenia");
             rozlacz();
+            return -1;
           }
         
       
@@ -83,6 +85,7 @@ public class Klient2 implements KinomaniakInterface {
         if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
             System.err.println("Błąd logowania!");
             rozlacz();
+            return -2;
           }  
         System.out.println("Pobieram baze!");
         try {
@@ -98,6 +101,11 @@ public class Klient2 implements KinomaniakInterface {
                 flush();
              }
       return 0;  
+     }
+     
+     @Override
+     public void goToReserve(){
+         
      }
      
      @Override
@@ -267,7 +275,7 @@ public class Klient2 implements KinomaniakInterface {
      }
   }
 @SuppressWarnings("unchecked")
-     private void pobierzBaze() throws ClassNotFoundException{
+     private int pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
          tmp2 =(String) odbierzO();
          if (tmp2.equals("!OK!")){//90-98
@@ -287,8 +295,10 @@ public class Klient2 implements KinomaniakInterface {
             }catch(IOException e){
                 System.err.println("IOException! "+e);
             }
+         }else {
+             return -1;
          }
-         
+       return 0;  
      }
      private void flush(){
          try {

@@ -4,6 +4,8 @@
  */
 package kinomaniak_interfejs;
 
+import kinomaniak_objs.Res;
+
 /**
  *
  * @author JK
@@ -17,16 +19,13 @@ public interface KinomaniakInterface {
         public int connect(); // wlasnie nie wiem jak to zalatwic, ale fajnie by bylo gdyby tutaj lączyl z serwerem, pobierał bazę i wchodzil do gotowości
         //metoda dzialaj do while
    //przechodzenie do kolejno: rezerwacji, anulowania, odbioru
-        public void goToReserve(); // dalej wywoluje sety
-        public void goToCancelRes();
-        public void goToGetRes(); //
+        public int goToReserve(); // dalej wywoluje sety
+        public int goToCancelRes();
+        public int goToGetRes(); //
     //
         
     //zwracanie danych rezerwacji dla gui    
-        public String getImieNazw();
-        public int getIdSeansu();
-        public int getRzad();
-        public int getNrMiejsca();
+        public Res getRezerwacja();
     //
         
     //pobieranie danych rezerwacji z gui przez klienta    
