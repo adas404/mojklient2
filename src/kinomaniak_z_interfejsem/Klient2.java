@@ -51,7 +51,7 @@ public class Klient2 implements KinomaniakInterface {
      File f = null;
      String imie_i_nazwisko;
      int id_seansu;
-     int[][] tmp_miejsca = new int[10][];
+     int[][] tmp_miejsca;
      //skasować
      int[] ksk= new int[2]; 
      Res res = new Res("costam",0,ksk);
@@ -121,46 +121,34 @@ public class Klient2 implements KinomaniakInterface {
      }
      @Override
      public int setMiejsca(int[][] miejsca){
-         int[][] costam = new int[2][3];
-         return 0;
+         tmp_miejsca = miejsca;
+         return 0; //Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
      }
      @Override
-     public int goToReserve(int ilosc_miejsc){
+     public int goToReserve(int ilosc_miejsc) {
       tmp =(String) odbierzO();
       if (!tmp.equals("!GDATA!")){
           System.out.println("Błąd serwera, oczekiwano !Gdata!");
           rozlacz();
           return -1;
       }
-      id_seansu=setMiejsca.costam[0][0];
       wyslijO((String)"!OK!");
       tmp=(String)odbierzO();
       if (tmp.equals("!NAZW!")){
-          System.out.println("Podaj imie i nazwisko:");
-          tmp = in.nextLine();
-          wyslijO(setImieNazw());
+          wyslijO(imie_i_nazwisko);
       }
       tmp=(String)odbierzO();
       if (tmp.equals("!SEANS!")){
-          System.out.println("Podaj ID SEANSU:");
-          tmp = in.nextLine();
-          wyslijO(Integer.parseInt(tmp));
+          wyslijO(id_seansu);
       }
-      System.out.println("Ilość miejsc do zarezerwowania: ");
-      int tmps = in.nextInt();
-      int[][] tmpseat = new int[tmps][2];
-      for(int i=0;i<tmps;i++){
-          System.out.print(i+". Podaj rząd w którym chcesz siedzieć: ");
-          tmpseat[i][0] = in.nextInt();
-          System.out.print(i+". Podaj miejsce w rzędzie na którym chcesz siedzieć: ");
-          tmpseat[i][1] = in.nextInt();
+      tmp=(String)odbierzO();
+      if (tmp.equals("!MIEJSC!")){
+         wyslijO(tmp_miejsca);
       }
-      in.nextLine();
-      wyslijO(tmpseat);
          return 0;
      }
      @Override
-     public int goToCancelRes(){
+     public int goToCancelRes(String imienaz){
         return 0; 
      }
      @Override

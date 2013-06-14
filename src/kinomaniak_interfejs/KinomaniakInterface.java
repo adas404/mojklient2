@@ -19,8 +19,8 @@ public interface KinomaniakInterface {
         public int connect(); // wlasnie nie wiem jak to zalatwic, ale fajnie by bylo gdyby tutaj lączyl z serwerem, pobierał bazę i wchodzil do gotowości
         //metoda dzialaj do while
    //przechodzenie do kolejno: rezerwacji, anulowania, odbioru
-        public int goToReserve(int ilosc_miejsc); // dalej wywoluje sety
-        public int goToCancelRes();
+        public int goToReserve(int ilosc_miejsc); // na koncu wywołanie! najpierw SETY!
+        public int goToCancelRes(String imienaz);
         public int goToGetRes(); //
     //
         
