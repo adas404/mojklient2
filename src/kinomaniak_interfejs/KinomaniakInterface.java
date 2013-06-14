@@ -19,7 +19,7 @@ public interface KinomaniakInterface {
         public int connect(); // wlasnie nie wiem jak to zalatwic, ale fajnie by bylo gdyby tutaj lączyl z serwerem, pobierał bazę i wchodzil do gotowości
         //metoda dzialaj do while
    //przechodzenie do kolejno: rezerwacji, anulowania, odbioru
-        public int goToReserve(int ilosc_miejsc); // na koncu wywołanie! najpierw SETY!
+        public int goToReserve(String imnaz,int idse, int[][] miejsca); // na koncu wywołanie! najpierw SETY!
         public int goToCancelRes(String imienaz);
         public int goToGetRes(); //
     //
@@ -29,9 +29,9 @@ public interface KinomaniakInterface {
     //
         
     //pobieranie danych rezerwacji z gui przez klienta    
-        public int setImieNazw(String imnaz);
-        public int setIdSeansu(int idse);
-        public int setMiejsca(int[][] miejsca);//jako miejsca[0][0] - rzad, miejsca[0][1] -miejsca, miejsca [1][0] -rzad itd.
+      //  public int setImieNazw(String imnaz);
+       // public int setIdSeansu(int idse);
+       // public int setMiejsca(int[][] miejsca);//jako miejsca[0][0] - rzad, miejsca[0][1] -miejsca, miejsca [1][0] -rzad itd.
     //
         
     //wysylanie info do gui czy miejsce jest wolne

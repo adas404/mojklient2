@@ -109,7 +109,7 @@ public class Klient2 implements KinomaniakInterface {
       return 0;  //jak oki
      }
      
-     @Override
+  /*   @Override
      public int setImieNazw(String imnaz){ //trzeba to tak rozwiązać że wywołanie rezerwacji 
          imie_i_nazwisko=imnaz;  //będzie wywoływało metode albo SetImieNazw albo SetMiejsca jak Ci lepiej Kuba
          return 0;
@@ -122,11 +122,11 @@ public class Klient2 implements KinomaniakInterface {
      @Override
      public int setMiejsca(int[][] miejsca){
          tmp_miejsca = miejsca;
-         return 0; //Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
-     }
+         return 0; 
+     }*/
      @Override
-     public int goToReserve(int ilosc_miejsc) {
-      tmp =(String) odbierzO();
+     public int goToReserve(String imnaz,int idse,int[][] miejsca) {
+      tmp =(String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
       if (!tmp.equals("!GDATA!")){
           System.out.println("Błąd serwera, oczekiwano !Gdata!");
           rozlacz();
@@ -135,15 +135,15 @@ public class Klient2 implements KinomaniakInterface {
       wyslijO((String)"!OK!");
       tmp=(String)odbierzO();
       if (tmp.equals("!NAZW!")){
-          wyslijO(imie_i_nazwisko);
+          wyslijO(imnaz);
       }
       tmp=(String)odbierzO();
       if (tmp.equals("!SEANS!")){
-          wyslijO(id_seansu);
+          wyslijO(idse);
       }
       tmp=(String)odbierzO();
       if (tmp.equals("!MIEJSC!")){
-         wyslijO(tmp_miejsca);
+         wyslijO(miejsca);
       }
          return 0;
      }
