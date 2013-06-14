@@ -126,6 +126,15 @@ public class Klient2 implements KinomaniakInterface {
      }*/
      @Override
      public int goToReserve(String imnaz,int idse,int[][] miejsca) {
+          wyslijO((String)"!CMD!");
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO((int)6);//komenda rezerwacji
+            }else{
+                System.out.println("NOT OK");
+                return -1;
+            }
+            ///////////////////////////////////////////////////////
       tmp =(String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
       if (!tmp.equals("!GDATA!")){
           System.out.println("Błąd serwera, oczekiwano !Gdata!");
@@ -149,6 +158,48 @@ public class Klient2 implements KinomaniakInterface {
      }
      @Override
      public int goToCancelRes(String imienaz){
+         wyslijO((String)"!CMD!");
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO((int)8);
+            }else{
+                System.out.println("NOT OK");
+                return -1;
+            }
+        ///////////////////////////////////////////////
+            tmp =(String) odbierzO();
+         if (!tmp.equals("!GDATA!")){
+             System.out.println("Błąd serwera, oczekiwano !Gdata!");
+             rozlacz();
+             return -1;
+         }else{
+             wyslijO((String)"!OK!");
+         }
+         Res[] rezerwacje = (Res[])odbierzO();
+         for (int i=0;i<rezerwacje.length;i++){
+             System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
+             System.out.println("Show ID: "+rezerwacje[i].getShowID());
+//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+"Miejsce"+rezerwacje[i].getSeats()[0][1]);
+//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+" Miejsce"+rezerwacje[i].getSeats()[1][0]);
+             System.out.println(rezerwacje[i].formatSeats());
+         }
+        // System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
+         //   tmp = in.nextLine();
+          Res res = null;  
+        for (int i=0;i<rezerwacje.length;i++){
+             if (rezerwacje[i].getName().equals(imienaz)){
+                 res = rezerwacje[i];
+                 break;
+             }
+         } 
+        
+         tmp = (String) odbierzO();
+         if (!tmp.equals("!GORES!")){
+             System.out.println("Błąd serwera, oczekiwano !GORES!");
+             rozlacz();
+             System.exit(-1);
+         }
+        wyslijO((Res)res);
         return 0; 
      }
      @Override
