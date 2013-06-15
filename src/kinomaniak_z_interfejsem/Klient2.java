@@ -161,7 +161,7 @@ public class Klient2 implements KinomaniakInterface {
          wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)8);
+                wyslijO((int)7);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -203,7 +203,41 @@ public class Klient2 implements KinomaniakInterface {
         return 0; 
      }
      @Override
-     public int goToGetRes(){
+     public int goToGetRes(String imienaz){
+          wyslijO((String)"!CMD!");
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO((int)6);
+            }else{
+                System.out.println("NOT OK");
+                return -1;
+            }
+        ///////////////////////////////////////////////
+            tmp =(String) odbierzO();
+         if (!tmp.equals("!GDATA!")){
+             System.out.println("Błąd serwera, oczekiwano !Gdata!");
+             rozlacz();
+             return -1;
+         }else{
+             wyslijO((String)"!OK!");
+         }
+         Res[] rezerwacje = (Res[])odbierzO();
+         for (int i=0;i<rezerwacje.length;i++){
+             System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
+             System.out.println("Show ID: "+rezerwacje[i].getShowID());
+//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+"Miejsce"+rezerwacje[i].getSeats()[0][1]);
+//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+" Miejsce"+rezerwacje[i].getSeats()[1][0]);
+             System.out.println(rezerwacje[i].formatSeats());
+         }
+        // System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
+         //   tmp = in.nextLine();
+          Res res = null;  
+        for (int i=0;i<rezerwacje.length;i++){
+             if (rezerwacje[i].getName().equals(imienaz)){
+                 res = rezerwacje[i];
+                 break;
+             }
+         } 
          return 0;
      }
      @Override
@@ -384,7 +418,8 @@ public class Klient2 implements KinomaniakInterface {
              System.err.println("IOError "+e);
          }
      }
-     public String zwrocOpis(String mojstr) throws ClassNotFoundException{
+     @Override
+     public String zwrocOpis(String mojstr){
          String tmpstr = "NULL";
         /* ObjectInputStream wel;
          Show[] tmpshss;

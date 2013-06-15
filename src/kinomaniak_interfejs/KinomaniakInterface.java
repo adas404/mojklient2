@@ -21,7 +21,7 @@ public interface KinomaniakInterface {
    //przechodzenie do kolejno: rezerwacji, anulowania, odbioru
         public int goToReserve(String imnaz,int idse, int[][] miejsca); // na koncu wywołanie! najpierw SETY!
         public int goToCancelRes(String imienaz);
-        public int goToGetRes(); //
+        public int goToGetRes(String imienaz); //
     //
         
     //zwracanie danych rezerwacji dla gui    
@@ -37,4 +37,5 @@ public interface KinomaniakInterface {
     //wysylanie info do gui czy miejsce jest wolne
         public int czyZajete(int rz, int mie);
     //
+        public String zwrocOpis(String tytul);
 }
