@@ -25,7 +25,7 @@ public interface KinomaniakInterface {
     //
         
     //zwracanie danych rezerwacji dla gui    
-        public Res getRezerwacja();
+        public Res[] getRezerwacja();
     //
         
     //pobieranie danych rezerwacji z gui przez klienta    
