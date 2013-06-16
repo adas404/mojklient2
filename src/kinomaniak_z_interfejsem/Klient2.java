@@ -405,8 +405,8 @@ public class Klient2 implements KinomaniakInterface {
          }
         wyslijO((Res)res);
      }
-     
-     private void rozlacz() {
+     @Override
+     public void rozlacz() {
        
          try{
              socket.close();

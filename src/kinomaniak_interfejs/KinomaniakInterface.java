@@ -40,4 +40,5 @@ public interface KinomaniakInterface {
         public int[][] czyZajete(int id_show);
     //
         public String zwrocOpis(String tytul);
+        public void rozlacz();
 }
