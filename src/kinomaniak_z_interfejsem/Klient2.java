@@ -256,7 +256,10 @@ public class Klient2 implements KinomaniakInterface {
          connect();
          return 0;
      }
-           
+     @Override
+     public Show[] getShow(){
+         return shss;
+     }
      public void wyslijT(String tmp) {
       try{ 
           this.out.write(tmp);

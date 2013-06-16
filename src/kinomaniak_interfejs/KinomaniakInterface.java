@@ -5,6 +5,7 @@
 package kinomaniak_interfejs;
 
 import kinomaniak_objs.Res;
+import kinomaniak_objs.Show;
 
 /**
  *
@@ -26,6 +27,7 @@ public interface KinomaniakInterface {
         
     //zwracanie danych rezerwacji dla gui    
         public Res[] getRezerwacja();
+        public Show[] getShow();
     //
         
     //pobieranie danych rezerwacji z gui przez klienta    
