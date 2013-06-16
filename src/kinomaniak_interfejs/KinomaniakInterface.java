@@ -37,7 +37,9 @@ public interface KinomaniakInterface {
     //
         
     //wysylanie info do gui czy miejsce jest wolne
-        public int czyZajete(int rz, int mie);
+        public int[][] czyZajete(int id_show);
     //
         public String zwrocOpis(String tytul);
+        public void rozlacz();
+        public int sprzedajBilet(int id_show, int[][] miejsca);
 }

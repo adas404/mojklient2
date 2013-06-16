@@ -4,22 +4,16 @@
  */
 package kinomaniak_z_interfejsem;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import kinomaniak_objs.Res;
@@ -32,24 +26,18 @@ import kinomaniak_interfejs.*;
  * @author Adam
  */
 public class Klient2 implements KinomaniakInterface {
-    private Show[] shss;
-    private Res[] rezerwacje;
-    // private Socket sockfd;
+     private Show[] shss;
+     private Res[] rezerwacje;
      private User luser;
-     private PrintWriter out;  //wyjście tekstowe klienta
-     private ObjectOutputStream oout; // wyjście obiektowe klienta
-    // private BufferedReader in; //wejście tekstowe klienta
-     private ObjectInputStream oin; //wejście obiektowe klienta
-     static final int PORT = 8888;  //port połączenia
-    // private static final String addr = "localhost";
+     private ObjectOutputStream oout; 
+     private ObjectInputStream oin; 
+     static final int PORT = 8888;  
      private Socket socket = null;
      private Object object;
      String tmp,tmp2 = null;
      String dbDate = null;
-     Scanner in = new Scanner(System.in);
      ObjectInputStream we;
      ObjectOutputStream wy;
-     File f = null;
      String imie_i_nazwisko;
      int id_seansu;
      int[][] tmp_miejsca;
@@ -58,21 +46,25 @@ public class Klient2 implements KinomaniakInterface {
      Res res = new Res("costam",0,ksk);
     
      
-    
+/**
+ * metoda a'la konstruktor klasy, wywoływana zaraz po utworzeniu obiektu
+ */    
      private void init(){
           try{
             InetAddress addr = InetAddress.getByName("localhost");
             socket = new Socket(addr, PORT);
             System.out.println("połączono!");
-           // this.out = new PrintWriter(this.socket.getOutputStream(),true);  //out for data
            this.oin = new ObjectInputStream(this.socket.getInputStream()); //input for objects
             this.oout = new ObjectOutputStream(this.socket.getOutputStream()); // output for objects
-           // this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream())); //in for data
             }catch(IOException e){
             System.err.println("IOErrorr!");
            
             }
         }
+     /**
+      * metoda nawiązująca połączenie z serwerem, wywołuje metode init, oraz metode pobierzBaze. przechodzi do stanu gotowości do rpacy między serwerem a klientem
+      * @return 0 - jeśli wykona się poprawnie -1 - jeśli błąd połączenie lub inny błąd -2 - jeślij błąd logowania
+      */
      @Override
      public int connect(){
          init();
@@ -81,18 +73,15 @@ public class Klient2 implements KinomaniakInterface {
         if (!tmp.equals("!OK!")){
             System.err.println("Błąd połączenia");
             rozlacz();
-            return -1; //jak błąd połączenia
+            return -1; 
           }
-        
-      
-        //User user = new User(username,pass,1);
         wyslijO(luser);
         tmp = (String) odbierzO();
         System.out.println(tmp);
-        if (!tmp.equals("!UOK!")){//zmienić, na !UOK! to tylko na dalsze potrzeby tworzenia klienta
+        if (!tmp.equals("!UOK!")){
             System.err.println("Błąd logowania!");
             rozlacz();
-            return -2;// jak błąd logowania
+            return -2;
           }  
         System.out.println("Pobieram baze!");
         try {
@@ -102,35 +91,26 @@ public class Klient2 implements KinomaniakInterface {
         }
         wyslijO((String)"!RDY!");
             tmp = (String) odbierzO();
-           // System.out.println("tmp"+tmp); //waiting for rdy command zamiast do mnie powinno być na ekran w serwerze
             if(tmp.equals("!RDY!")){
                 System.out.println("Serwer gotowy do pracy!");
                 flush();
              }
-      return 0;  //jak oki
+      return 0;  
      }
+     /**
+      * metoda rezerwacji biletu
+      * @param imnaz - parametr pobierany z GUI - Imie i Nazwisko
+      * @param idse - parametr pobierany z GUI - ID seansu na która ma zostać dokonana rezerwacja
+      * @param miejsca - tablica z miejscami jakie mają zostac zarezerwowane
+      * @return 0 - jeśli się poprawnie wykona -1 - jeśli wystąpi jakikolwiek błąd
+      */
      
-  /*   @Override
-     public int setImieNazw(String imnaz){ //trzeba to tak rozwiązać że wywołanie rezerwacji 
-         imie_i_nazwisko=imnaz;  //będzie wywoływało metode albo SetImieNazw albo SetMiejsca jak Ci lepiej Kuba
-         return 0;
-     }
-     @Override 
-     public int setIdSeansu(int idse){
-         id_seansu=idse;
-         return 0;
-     }
-     @Override
-     public int setMiejsca(int[][] miejsca){
-         tmp_miejsca = miejsca;
-         return 0; 
-     }*/
      @Override
      public int goToReserve(String imnaz,int idse,int[][] miejsca) {
           wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)6);//komenda rezerwacji
+                wyslijO((int)6);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -151,12 +131,16 @@ public class Klient2 implements KinomaniakInterface {
       if (tmp.equals("!SEANS!")){
           wyslijO(idse);
       }
-      tmp=(String)odbierzO();
-      if (tmp.equals("!MIEJSC!")){
+   
          wyslijO(miejsca);
-      }
+      
          return 0;
      }
+    /**
+     * metoda anulująca rezerwacje
+     * @param imienaz - imie i nazwisko do rezerwacji
+     * @return 0 - jeśli się poprawnie wykona -1 jeśli jakikolwiek błąd
+     */
      @Override
      public int goToCancelRes(String imienaz){
          wyslijO((String)"!CMD!");
@@ -180,12 +164,8 @@ public class Klient2 implements KinomaniakInterface {
          for (int i=0;i<rezerwacje.length;i++){
              System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
              System.out.println("Show ID: "+rezerwacje[i].getShowID());
-//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+"Miejsce"+rezerwacje[i].getSeats()[0][1]);
-//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+" Miejsce"+rezerwacje[i].getSeats()[1][0]);
              System.out.println(rezerwacje[i].formatSeats());
          }
-        // System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
-         //   tmp = in.nextLine();
           Res res = null;  
         for (int i=0;i<rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(imienaz)){
@@ -203,6 +183,11 @@ public class Klient2 implements KinomaniakInterface {
         wyslijO((Res)res);
         return 0; 
      }
+     /**
+      * metoda odbioru rezerwacji
+      * @param imienaz - paarametr pobierany z GUI, imie i nazwisko do odbioru rezerwacji
+      * @return 0 - jeśli się wykona poprawanie -1 jeśli jakieś błędy 
+      */
      @Override
      public int goToGetRes(String imienaz){
           wyslijO((String)"!CMD!");
@@ -226,12 +211,8 @@ public class Klient2 implements KinomaniakInterface {
          for (int i=0;i<rezerwacje.length;i++){
              System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
              System.out.println("Show ID: "+rezerwacje[i].getShowID());
-//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+"Miejsce"+rezerwacje[i].getSeats()[0][1]);
-//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+" Miejsce"+rezerwacje[i].getSeats()[1][0]);
              System.out.println(rezerwacje[i].formatSeats());
          }
-        // System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
-         //   tmp = in.nextLine();
           Res res = null;  
         for (int i=0;i<rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(imienaz)){
@@ -239,54 +220,86 @@ public class Klient2 implements KinomaniakInterface {
                  break;
              }
          } 
+       tmp = (String) odbierzO();
+         if (!tmp.equals("!GORES!")){
+             System.out.println("Błąd serwera, oczekiwano !GORES!");
+             rozlacz();
+             return -1;
+         }
+        wyslijO((Res)res);
          return 0;
      }
+     /**
+      * metoda przekazuje tablice z rezerwacjami do GUI
+      * @return tablice Res[]
+      */
      @Override
      public Res[] getRezerwacja(){
          return rezerwacje;
      }
+     /**
+      * metoda sprawdza czy podane miejsca są zajęte
+      * @param id_show - id seansu na który mamy zwrócić tablice zajętości
+      * @return - int[][] tablica z zajętymi miejscami
+      */
      @Override
-     public int czyZajete(int rz, int mie){
-         return rz;
+     public int[][] czyZajete(int id_show){
+             wyslijO((String)"!CMD!");
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO((int)9);
+            }else{
+                System.out.println("NOT OK");
+                return null;
+            }
+            ////////////////////////////////////////////
+            tmp =(String) odbierzO();
+            if (!tmp.equals("!GDATA!")){
+                 System.out.println("Błąd serwera, oczekiwano !Gdata!");
+                rozlacz();
+                return null;
+            }else{
+                 wyslijO((String)"!OK!");
+            }
+            tmp =(String) odbierzO();
+            if (tmp.equals("!GSID!")){
+                wyslijO(id_show);
+            }
+            else {
+                 System.out.println("Błąd serwera, oczekiwano !GSID!");
+                rozlacz();
+                return null;
+            }
+            int zajete[][] = new int[10][10];
+            zajete =(int[][]) odbierzO();
+         return zajete;
      }
-     
+     /**
+      * metoda tworzy nowego użytkownika i wysyła go do sprawdzenia serwerowi
+      * @param log - login
+      * @param pas - hasło
+      * @return  - 0 jeśli wykona się poprawnie, -1 jeśli błąd logowania
+      */
      @Override
      public int setLogin(String log,String pas){
          luser = new User(log,pas,1);
-         connect();
+         if (connect()!=0){
+             return -1;
+         }
          return 0;
      }
+     /**
+      * przekazuje tablice Show[] do GUI
+      * @return  zwraca tablicę Show[]
+      */
      @Override
      public Show[] getShow(){
          return shss;
      }
-     public void wyslijT(String tmp) {
-      try{ 
-          this.out.write(tmp);
-             }
-            catch(Exception e){
-              System.err.println("StringError!"); 
-      }
-      
-    }
-     public String odbierzT() {
-      try{ 
-         
-         tmp =(String)this.oin.readObject();
-          
-      }
-            
-            catch(IOException e){
-              System.err.println("IOError!"); 
-      }finally {
-          return tmp;
-      }
-      
-    }
-    /**
-     * 
-     * @param object 
-     */
+     /**
+      * metoda do uniwersalnego wysyłania obiektow do serwera
+      * @param object - obiekt do wysłania
+      */
      public void wyslijO(Object object){
         try{
             this.oout.writeObject(object);
@@ -294,7 +307,10 @@ public class Klient2 implements KinomaniakInterface {
             System.err.println("IOError!"); 
         }   
      }
-     
+     /**
+      * metoda do uniwersalnego odbierania obiektów z serwera
+      * @return - zwraca ten obiekt
+      */
      public Object odbierzO(){
         try{
              object = this.oin.readObject();
@@ -304,83 +320,14 @@ public class Klient2 implements KinomaniakInterface {
             return object;
         }   
      }
-     
-     public String menu(){
-         System.out.println("Wybierz co chcesz robić:");
-         System.out.println("5.rezerwacja biletu");
-         System.out.println("6.potwierdzenie rezerwacji");
-         System.out.println("7.odbiór rezerwacji");
-         System.out.println("8.anulowanie rezerwacji");
-         String cmd = in.nextLine();
-         return cmd;
-     }
-     
-     public void rezerwujBilet(){
-      
-          
-//      System.out.println("Podaj rząd w którym chcesz siedzieć:");
-//      tmp = in.nextLine();
-//      int[] tmpseat = new int[2];
-//      tmpseat[0]=Integer.parseInt(tmp);
-//      System.out.println("Podaj miejsce w rzędzie na którym chcesz siedzieć");
-//      tmp = in.nextLine();
-//      tmpseat[1] = Integer.parseInt(tmp);
-//      wyslijO(tmpseat);
-      
-      
-     }
-     
-     public void potwierdzOdbierzRezerwacje(String decyzja){
-         switch (decyzja) {
-             case "POTWIERDZ":
-                 System.out.println("Wybrałeś opcję potwierdzenia rezerwacji");
-                 break;
-             case "ANULUJ":
-                 System.out.println("Wybrałeś opcję anulowania rezerwacji");
-                 break;
-             case "ODBIERZ":
-                 System.out.println("Wybrałeś opcję odebrania rezerwacji");
-         }
-         tmp =(String) odbierzO();
-         if (!tmp.equals("!GDATA!")){
-             System.out.println("Błąd serwera, oczekiwano !Gdata!");
-             rozlacz();
-            
-         }else{
-             wyslijO((String)"!OK!");
-         }
-         rezerwacje = (Res[])odbierzO();
-         for (int i=0;i<rezerwacje.length;i++){
-             System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
-             System.out.println("Show ID: "+rezerwacje[i].getShowID());
-//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+"Miejsce"+rezerwacje[i].getSeats()[0][1]);
-//             System.out.println("Rząd"+rezerwacje[i].getSeats()[0][0]+" Miejsce"+rezerwacje[i].getSeats()[1][0]);
-             System.out.println(rezerwacje[i].formatSeats());
-         }
-         System.out.println("Podaj imie i nazwisko ktore chcesz potwierdzić:");
-            tmp = in.nextLine();
-          Res res = null;  
-        for (int i=0;i<rezerwacje.length;i++){
-             if (rezerwacje[i].getName().equals(tmp)){
-                 res = rezerwacje[i];
-                 break;
-             }
-         } 
-        
-         tmp = (String) odbierzO();
-         if (!tmp.equals("!GORES!")){
-             System.out.println("Błąd serwera, oczekiwano !GORES!");
-             rozlacz();
-             System.exit(-1);
-         }
-        wyslijO((Res)res);
-     }
-     
-     private void rozlacz() {
+     /**
+      * metoda zamyka wszystkie połączenia klienta
+      */
+     @Override
+     public void rozlacz() {
        
          try{
              socket.close();
-             in.close();
              oin.close();
              oout.close();
           //   out.close();
@@ -389,6 +336,11 @@ public class Klient2 implements KinomaniakInterface {
          
      }
   }
+     /**
+      * metoda do pobierania bazy fimów z serwera
+      * @return 0 jeśli wykona się poprawine -1 jeśli z błędem
+      * @throws ClassNotFoundException 
+      */
 @SuppressWarnings("unchecked")
      private int pobierzBaze() throws ClassNotFoundException{
          wyslijO((String)"!GETMOV!");
@@ -397,7 +349,6 @@ public class Klient2 implements KinomaniakInterface {
             try{    
                     List<Show> ar = (ArrayList<Show>)oin.readObject();
                     shss = ar.toArray(new Show[]{});
-                   // Show[] sh = (Show[])oin.readObject();
                     wy = new ObjectOutputStream(new FileOutputStream("Shows.kin"));
                     Date dateNow = new Date (); 
                     SimpleDateFormat dt = new SimpleDateFormat("dd-MM-yyyy");
@@ -415,6 +366,9 @@ public class Klient2 implements KinomaniakInterface {
          }
        return 0;  
      }
+/**
+ * metoda do czyszczenia bufora wyjścia do serwera
+ */
      private void flush(){
          try {
              oout.flush();
@@ -422,21 +376,14 @@ public class Klient2 implements KinomaniakInterface {
              System.err.println("IOError "+e);
          }
      }
+     /**
+      * metoda zwwracająca opis danego filmu
+      * @param mojstr - tytuł fimu
+      * @return opis filmu
+      */
      @Override
      public String zwrocOpis(String mojstr){
          String tmpstr = "NULL";
-        /* ObjectInputStream wel;
-         Show[] tmpshss;
-         try{
-             wel = new ObjectInputStream(new FileInputStream("Shows.kin"));
-         //Show[] tmpstr = new (Show[]) wex.readObject;
-          tmpstr = (String)wel.readObject();
-          int tmpint = (Integer)wel.readObject();
-          System.out.println("tmpint"+tmpint);
-          tmpshss = (Show[]) we.readObject();
-          System.out.println("deb");
-         // ArrayList<Res> reslist = (ArrayList<Res>)wel.readObject();
-         //Show[] tmpshss = reslist.toArray(new Show[]{});*/
           for (Show sh : shss){
               System.out.println(sh.getMovie().getName());
               if(sh.getMovie().getName().equals("Superman")) {
@@ -448,75 +395,41 @@ public class Klient2 implements KinomaniakInterface {
          
          return tmpstr;
          
-         
-     }
-     public void dzialaj() throws ClassNotFoundException{
-       // String tmp;
-       
-       //    f = new File("Shows.kin");
-     
-     /*   if (f.exists()) { //jeśli to nie zadziała otworzymy nowy strumień i damy wyjątek file not found
-            System.out.println("Jest baza! Sprawdzam date");
-            try{
-                we = new ObjectInputStream(new FileInputStream("Shows.kin"));
-                dbDate = (String)we.readObject();}
-                catch(ClassNotFoundException | IOException cnfe){
-                System.err.println("IOException! or ClassNotFoundException!");}
-            wyslijO((String)"!GETMOVDT!");
-            wyslijO(dbDate);
-            tmp =(String) odbierzO();
-            if (tmp.equals("!MOVUPD!")){ //zrobić usuwanie starej bazy!
-                try{
-               wy.writeObject(oin.readObject());
-               }catch(IOException e){
-                System.err.println("IOException!");
-            }
-          }  
-            
-        } else {*/
-            
-      //  }
-            
-        //sekcja gotowość do pracy!
-            
-            while(true){
-            flush();
-            wyslijO((String)"!CMD!");
+     } 
+     /**
+      * metoda do bezpośredniej sprzedaży biletu
+      * @param id_show - id seansu na który chcemy sprzedać bilet
+      * @param miejsca - tablica miejsc które chcemy sprzedać bilet
+      * @return 0 - jeśli się poprawnie wykona -1 - jeśli jakikolwiek błąd
+      */
+     @Override
+     public int sprzedajBilet(int id_show, int[][] miejsca){
+          wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
-            int tmp3;
             if(tmp.equals("!OK!")){
-                tmp3 = Integer.parseInt(menu());
-                wyslijO(tmp3);
+                wyslijO((int)10);
             }else{
                 System.out.println("NOT OK");
-                return;
+                return -1;
             }
-            switch(tmp3){
-                case 5:{
-                    rezerwujBilet();//todo!
-                    break;
-                }
-                case 6:{
-                    potwierdzOdbierzRezerwacje("POTWIERDZ");
-                    break;
-                }
-                case 7:{
-                    potwierdzOdbierzRezerwacje("ANULUJ");
-                    break;
-                }
-                case 8:{
-                    potwierdzOdbierzRezerwacje("ODBIERZ");
-                    break;
-                
-                }
-                case 9:{
-                    System.out.println(zwrocOpis("Superman"));
-                    break;
-                }
-           }
-            tmp = (String)odbierzO(); // spradzić czy działa czy to generuje błędy;D
-            }
-//        rozlacz();
+            ///////////////////////////////////////////////////////
+      tmp =(String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
+      if (!tmp.equals("!GDATA!")){
+          System.out.println("Błąd serwera, oczekiwano !Gdata!");
+          rozlacz();
+          return -1;
+      }
+      wyslijO((String)"!OK!");
+      tmp=(String)odbierzO();
+      if (tmp.equals("!NAZW!")){
+          wyslijO("NULL");
+      }
+      tmp=(String)odbierzO();
+      if (tmp.equals("!SEANS!")){
+          wyslijO(id_show);
+      }
+      wyslijO(miejsca);
+      
+         return 0;
      }
-}  
-
+}

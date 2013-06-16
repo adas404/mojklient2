@@ -18,7 +18,7 @@ public class KinomaniakKlientMoj2 {
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         // TODO code application logic here
         Klient2 klient2 = new Klient2();
-        klient2.dzialaj();
+      //  klient2.dzialaj();
       
     }
 }
