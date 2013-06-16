@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Formatter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 
 /**
@@ -14,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  * @author qbass
  */
 public class User implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     private String name;
     private String password;
     private int utype;
@@ -28,10 +29,38 @@ public class User implements Serializable{
      */
     public User(String name, String password,int utype){
         this.name = name;
-        this.password = password;
+        String tmp = password;
+        this.password = toSHA1(tmp.getBytes());        
         this.utype = utype;
         this.availcmds = new int[12];
         this.setCmds();
+    }
+    public User(String name, String password){
+        this.name = name;
+        String tmp = password;
+        this.password = toSHA1(tmp.getBytes());      
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        boolean isEqual = false;
+        if (this.getClass() == obj.getClass())
+        {
+            User res = (User) obj;
+            if ((res.name).equals(this.name) && (res.password).equals(this.password)) {
+                System.out.println("equals");
+                isEqual = true;
+            }
+        } 
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.password);
+        return hash;
     }
     
     /**
@@ -53,7 +82,8 @@ public class User implements Serializable{
      * @return ciąg SHA1 
      */
     public String getPass(){
-        return toSHA1(this.password.getBytes());
+//        return toSHA1(this.password.getBytes());
+        return this.password;
     }
     /**
      * Metoda zwracająca typ użytkownika
