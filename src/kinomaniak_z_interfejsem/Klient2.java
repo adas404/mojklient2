@@ -130,7 +130,7 @@ public class Klient2 implements KinomaniakInterface {
           wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)6);//komenda rezerwacji
+                wyslijO((int)5);//komenda rezerwacji
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -162,7 +162,7 @@ public class Klient2 implements KinomaniakInterface {
          wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)7);
+                wyslijO((int)8);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -208,7 +208,7 @@ public class Klient2 implements KinomaniakInterface {
           wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)6);
+                wyslijO((int)7);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -246,13 +246,41 @@ public class Klient2 implements KinomaniakInterface {
          return rezerwacje;
      }
      @Override
-     public int czyZajete(int rz, int mie){
-         return rz;
+     public int[][] czyZajete(int id_show){
+             wyslijO((String)"!CMD!");
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO((int)9);
+            }else{
+                System.out.println("NOT OK");
+                return null;
+            }
+            ////////////////////////////////////////////
+            tmp =(String) odbierzO();
+            if (!tmp.equals("!GDATA!")){
+                 System.out.println("Błąd serwera, oczekiwano !Gdata!");
+                rozlacz();
+                return null;
+            }else{
+                 wyslijO((String)"!OK!");
+            }
+            tmp =(String) odbierzO();
+            if (tmp.equals("!GSID")){
+                wyslijO(id_show);
+            }
+            else {
+                 System.out.println("Błąd serwera, oczekiwano !GSID!");
+                rozlacz();
+                return null;
+            }
+            int zajete[][] = new int[10][10];
+            zajete =(int[][]) odbierzO();
+         return zajete;
      }
      
      @Override
      public int setLogin(String log,String pas){
-         luser = new User(log,pas,1);
+         luser = new User(log,pas);
          if (connect()!=0){
              return -1;
          } 
