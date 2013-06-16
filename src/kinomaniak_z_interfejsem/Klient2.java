@@ -253,7 +253,9 @@ public class Klient2 implements KinomaniakInterface {
      @Override
      public int setLogin(String log,String pas){
          luser = new User(log,pas,1);
-         connect();
+         if (connect()!=0){
+             return -1;
+         } 
          return 0;
      }
      @Override
