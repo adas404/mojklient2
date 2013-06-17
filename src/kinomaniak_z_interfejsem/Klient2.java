@@ -279,7 +279,7 @@ public class Klient2 implements KinomaniakInterface {
       */
      @Override
      public int setLogin(String log,String pas){
-         luser = new User(log,pas,1);
+         luser = new User(log,pas);
          if (connect()!=0){
              return -1;
          }
