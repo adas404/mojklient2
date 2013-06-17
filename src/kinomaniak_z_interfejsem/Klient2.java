@@ -41,9 +41,6 @@ public class Klient2 implements KinomaniakInterface {
      String imie_i_nazwisko;
      int id_seansu;
      int[][] tmp_miejsca;
-     //skasować
-     int[] ksk= new int[2]; 
-     Res res = new Res("costam",0,ksk);
     
      
 /**
@@ -330,7 +327,7 @@ public class Klient2 implements KinomaniakInterface {
              socket.close();
              oin.close();
              oout.close();
-          //   out.close();
+             System.exit(0);
          } catch(IOException e){
               System.err.println("IOError!");        
          

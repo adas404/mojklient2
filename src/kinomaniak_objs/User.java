@@ -11,7 +11,7 @@ import java.util.Objects;
 
 
 /**
- *
+ * Klasa reprezentująca użytkownika
  * @author qbass
  */
 public class User implements Serializable{
@@ -35,12 +35,22 @@ public class User implements Serializable{
         this.availcmds = new int[12];
         this.setCmds();
     }
+    /**
+     * Utworzenie instancji klasy użytkownika na potrzeby logowania klienta
+     * @param name nazwa użytkownika
+     * @param password hasło w czystej postaci
+     */
     public User(String name, String password){
         this.name = name;
         String tmp = password;
         this.password = toSHA1(tmp.getBytes());      
     }
-    
+    /**
+     * Przesłoniona metoda equals klasy Object, dla pominięcia sprawdzania typu użytkownika i jego uprawnień
+     * Wymagane przy sprawdzaniu poprawności logowania przez Serwer
+     * @param obj Obiekt klasy User do porównania
+     * @return true jeśli obiekt jest taki sam, false jeśli nie
+     */
     @Override
     public boolean equals(Object obj){
         boolean isEqual = false;
@@ -93,7 +103,7 @@ public class User implements Serializable{
         return this.utype;
     }
     /**
-     * Metoda ustawiająca tablicę z dostępnymi komendami dla danego użytkownika
+     * Metoda ustawiająca tablicę z dostępnymi komendami dla danego użytkownika.
      */
     private void setCmds(){
         for(int i=0;i<12;i++){
@@ -109,6 +119,8 @@ public class User implements Serializable{
                 this.availcmds[1] = 6;
                 this.availcmds[2] = 7;
                 this.availcmds[3] = 8;
+                this.availcmds[4] = 9;
+                this.availcmds[5] = 10;
                 break;
             }
             case 2 : { //SuperUser/Admin
@@ -143,7 +155,11 @@ public class User implements Serializable{
         }
         return byteToHex(md.digest(pass));
     }
-    
+    /**
+     * Metoda przekształcająca hash SHA1 z postaci Binarnej na Hexadecymalną
+     * @param hash hash w postaci binarnej
+     * @return hash w postaci hexadecymalnej
+     */
     private String byteToHex(byte[] hash)
     {
         Formatter formatter = new Formatter();
