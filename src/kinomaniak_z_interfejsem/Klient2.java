@@ -107,7 +107,7 @@ public class Klient2 implements KinomaniakInterface {
           wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)6);
+                wyslijO((int)5);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -125,6 +125,7 @@ public class Klient2 implements KinomaniakInterface {
           wyslijO(imnaz);
       }
       tmp=(String)odbierzO();
+      System.out.println("tmp"+tmp);
       if (tmp.equals("!SEANS!")){
           wyslijO(idse);
       }
@@ -143,7 +144,7 @@ public class Klient2 implements KinomaniakInterface {
          wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)7);
+                wyslijO((int)8);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -157,12 +158,12 @@ public class Klient2 implements KinomaniakInterface {
          }else{
              wyslijO((String)"!OK!");
          }
-         rezerwacje = (Res[])odbierzO();
-         for (int i=0;i<rezerwacje.length;i++){
+        rezerwacje = (Res[])odbierzO();
+       /*  for (int i=0;i<rezerwacje.length;i++){
              System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
              System.out.println("Show ID: "+rezerwacje[i].getShowID());
              System.out.println(rezerwacje[i].formatSeats());
-         }
+         }*/
           Res res = null;  
         for (int i=0;i<rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(imienaz)){
@@ -190,7 +191,7 @@ public class Klient2 implements KinomaniakInterface {
           wyslijO((String)"!CMD!");
             tmp =(String)odbierzO();
             if(tmp.equals("!OK!")){
-                wyslijO((int)6);
+                wyslijO((int)7);
             }else{
                 System.out.println("NOT OK");
                 return -1;
@@ -205,11 +206,11 @@ public class Klient2 implements KinomaniakInterface {
              wyslijO((String)"!OK!");
          }
          rezerwacje = (Res[])odbierzO();
-         for (int i=0;i<rezerwacje.length;i++){
+         /*for (int i=0;i<rezerwacje.length;i++){
              System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
              System.out.println("Show ID: "+rezerwacje[i].getShowID());
              System.out.println(rezerwacje[i].formatSeats());
-         }
+         }*/
           Res res = null;  
         for (int i=0;i<rezerwacje.length;i++){
              if (rezerwacje[i].getName().equals(imienaz)){
@@ -251,6 +252,7 @@ public class Klient2 implements KinomaniakInterface {
             }
             ////////////////////////////////////////////
             tmp =(String) odbierzO();
+            System.out.println("tmp"+tmp);
             if (!tmp.equals("!GDATA!")){
                  System.out.println("Błąd serwera, oczekiwano !Gdata!");
                 rozlacz();
