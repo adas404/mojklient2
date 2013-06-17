@@ -416,8 +416,7 @@ public class Klient2 implements KinomaniakInterface {
                 return -1;
             }
             ///////////////////////////////////////////////////////
-            tmp =(String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
-            System.out.println("tmp"+tmp);
+            tmp =(String) odbierzO();
             if (!tmp.equals("!GDATA!")){
             System.out.println("Błąd serwera, oczekiwano !Gdata!");
              rozlacz();
@@ -425,6 +424,7 @@ public class Klient2 implements KinomaniakInterface {
          }
             wyslijO((String)"!OK!");
           tmp =  (String) odbierzO();
+          System.out.println("tmp"+tmp);
          if (tmp.equals("!NORES!")){
              System.out.println("Nie ma rezewacji!");
              return -2;

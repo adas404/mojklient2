@@ -121,6 +121,7 @@ public class User implements Serializable{
                 this.availcmds[3] = 8;
                 this.availcmds[4] = 9;
                 this.availcmds[5] = 10;
+                this.availcmds[6] = 4;
                 break;
             }
             case 2 : { //SuperUser/Admin
