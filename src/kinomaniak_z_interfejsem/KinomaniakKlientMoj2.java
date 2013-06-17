@@ -51,6 +51,7 @@ public class KinomaniakKlientMoj2 {
                  break;
                 }
                 case 2:{//wyswietl rezerwacje
+                    klient2.pobierzRezerwacje();
                     res = klient2.getRezerwacja();
                     for (Res rs : res){
                         System.out.println("Imie i Nazwisko: "+rs.getName()+"ShowID: "+rs.getShowID()+rs.formatSeats());
