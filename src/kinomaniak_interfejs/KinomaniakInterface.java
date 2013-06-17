@@ -24,7 +24,7 @@ public interface KinomaniakInterface {
         public int goToCancelRes(String imienaz);
         public int goToGetRes(String imienaz); //
     //
-        
+      public int pobierzRezerwacje();  
     //zwracanie danych rezerwacji dla gui    
         public Res[] getRezerwacja();
         public Show[] getShow();

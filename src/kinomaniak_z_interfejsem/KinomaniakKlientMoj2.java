@@ -32,6 +32,15 @@ public class KinomaniakKlientMoj2 {
         Klient2 klient2 = new Klient2();
         klient2.setLogin(login,pass);
         while (true){
+            System.out.println("Wybierz opcje:");
+            System.out.println("1.Wyświelt filmy");
+            System.out.println("2.Wyświetl rezerwacje");
+            System.out.println("3.Wyświetl sale");
+            System.out.println("4.Rezerwuj bilet");
+            System.out.println("5.Sprzedaj bilet");
+            System.out.println("6.Odbierz rezerwacje");
+            System.out.println("7.Anuluj rezerwacje");
+            System.out.println("8.Pobierz baze rezerwacji");
             komenda = Integer.parseInt(in.nextLine());
             switch(komenda){
                 case 1:{//wyświetl filmy
@@ -106,6 +115,10 @@ public class KinomaniakKlientMoj2 {
                      klient2.goToCancelRes(imie_i_nazwisko);
                      break;
                 }
+                case 8:{//pobierz rezerwacje
+                    klient2.pobierzRezerwacje();
+                    break;
+                }    
                     
         }
        //  String tmp = (String)klient2.odbierzO();   

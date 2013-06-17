@@ -158,6 +158,11 @@ public class Klient2 implements KinomaniakInterface {
          }else{
              wyslijO((String)"!OK!");
          }
+         tmp =  (String) odbierzO();
+         if (tmp.equals("!NORES!")){
+             System.out.println("Nie ma rezewacji!");
+             return -2;
+         }
         rezerwacje = (Res[])odbierzO();
        /*  for (int i=0;i<rezerwacje.length;i++){
              System.out.println("Imie i nazwisko: "+rezerwacje[i].getName());
@@ -204,6 +209,11 @@ public class Klient2 implements KinomaniakInterface {
              return -1;
          }else{
              wyslijO((String)"!OK!");
+         }
+         tmp =  (String) odbierzO();
+         if (tmp.equals("!NORES!")){
+             System.out.println("Nie ma rezewacji!");
+             return -2;
          }
          rezerwacje = (Res[])odbierzO();
          /*for (int i=0;i<rezerwacje.length;i++){
@@ -395,6 +405,33 @@ public class Klient2 implements KinomaniakInterface {
          return tmpstr;
          
      } 
+     @Override
+     public int pobierzRezerwacje(){
+         wyslijO((String)"!CMD!");
+            tmp =(String)odbierzO();
+            if(tmp.equals("!OK!")){
+                wyslijO((int)4);
+            }else{
+                System.out.println("NOT OK");
+                return -1;
+            }
+            ///////////////////////////////////////////////////////
+            tmp =(String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
+            System.out.println("tmp"+tmp);
+            if (!tmp.equals("!GDATA!")){
+            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+             rozlacz();
+            return -1;
+         }
+            wyslijO((String)"!OK!");
+          tmp =  (String) odbierzO();
+         if (tmp.equals("!NORES!")){
+             System.out.println("Nie ma rezewacji!");
+             return -2;
+         }
+         rezerwacje = (Res[])odbierzO();
+                return 0;
+     }
      /**
       * metoda do bezpośredniej sprzedaży biletu
       * @param id_show - id seansu na który chcemy sprzedać bilet
