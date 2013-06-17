@@ -55,7 +55,6 @@ public class KinomaniakKlientMoj2 {
                     for (Res rs : res){
                         System.out.println("Imie i Nazwisko: "+rs.getName()+"ShowID: "+rs.getShowID()+rs.formatSeats());
                     }
-                    klient2.rozlacz();
                 break;
                 }
                 case 3:{//wyswietl sale
@@ -119,9 +118,10 @@ public class KinomaniakKlientMoj2 {
                     klient2.pobierzRezerwacje();
                     break;
                 }    
-                    
+                
         }
        //  String tmp = (String)klient2.odbierzO();   
         }
+   
     }
 }

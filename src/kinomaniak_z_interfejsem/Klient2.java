@@ -48,7 +48,7 @@ public class Klient2 implements KinomaniakInterface {
  */    
      private void init(){
           try{
-            InetAddress addr = InetAddress.getByName("localhost");
+            InetAddress addr = InetAddress.getByName("192.168.137.1");
             socket = new Socket(addr, PORT);
             System.out.println("połączono!");
            this.oin = new ObjectInputStream(this.socket.getInputStream()); //input for objects
