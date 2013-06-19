@@ -48,7 +48,7 @@ public class Klient2 implements KinomaniakInterface {
  */    
      private void init(){
           try{
-            InetAddress addr = InetAddress.getByName("192.168.137.1");
+            InetAddress addr = InetAddress.getByName("localhost");
             socket = new Socket(addr, PORT);
             System.out.println("połączono!");
            this.oin = new ObjectInputStream(this.socket.getInputStream()); //input for objects
@@ -76,8 +76,6 @@ public class Klient2 implements KinomaniakInterface {
         tmp = (String) odbierzO();
         System.out.println(tmp);
         if (!tmp.equals("!UOK!")){
-            System.err.println("Błąd logowania!");
-            rozlacz();
             return -2;
           }  
         System.out.println("Pobieram baze!");
@@ -290,14 +288,15 @@ public class Klient2 implements KinomaniakInterface {
       * @return  - 0 jeśli wykona się poprawnie, -1 jeśli błąd logowania
       */
      @Override
-     public int setLogin(String log,String pas){
-         luser = new User(log,pas);
-         if (connect()!=0){
-             return -1;
-         }
-         return 0;
-     }
-     /**
+    public int setLogin(String log, String pas) {
+        luser = new User(log, pas);
+        if (connect() != 0) {
+            return -1;
+        }
+        return 0;
+    }
+
+    /**
       * przekazuje tablice Show[] do GUI
       * @return  zwraca tablicę Show[]
       */
@@ -310,12 +309,12 @@ public class Klient2 implements KinomaniakInterface {
       * @param object - obiekt do wysłania
       */
      public void wyslijO(Object object){
-        try{
+        try {
             this.oout.writeObject(object);
-        } catch(IOException e) {
-            System.err.println("IOError!"); 
-        }   
-     }
+        } catch (IOException e) {
+            System.err.println("IOError!");
+        }
+    }
      /**
       * metoda do uniwersalnego odbierania obiektów z serwera
       * @return - zwraca ten obiekt
