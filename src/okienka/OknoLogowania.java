@@ -2,16 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kinomaniak_z_interfejsem;
+package okienka;
 
 import javax.swing.JOptionPane;
+import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 
 /**
  *
  * @author Adam
  */
 public class OknoLogowania extends javax.swing.JFrame {
-    Klient2 klient2 = new Klient2();
     /**
      * Creates new form OknoLogowania
      */
@@ -29,10 +29,10 @@ public class OknoLogowania extends javax.swing.JFrame {
     private void initComponents() {
 
         poleLoginu = new javax.swing.JTextField();
-        poleHasla = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         przyciskLogowania = new javax.swing.JButton();
+        poleHasla = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,19 +48,21 @@ public class OknoLogowania extends javax.swing.JFrame {
             }
         });
 
+        poleHasla.setToolTipText("poleHasla");
+        poleHasla.setName("poleHasla"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(poleHasla)
                     .addComponent(przyciskLogowania)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(poleHasla)
-                        .addComponent(poleLoginu, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                    .addComponent(poleLoginu, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
                 .addContainerGap(198, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -72,8 +74,8 @@ public class OknoLogowania extends javax.swing.JFrame {
                 .addComponent(poleLoginu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(poleHasla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(poleHasla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(przyciskLogowania)
                 .addContainerGap(69, Short.MAX_VALUE))
@@ -85,10 +87,15 @@ public class OknoLogowania extends javax.swing.JFrame {
     private void przyciskLogowaniaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_przyciskLogowaniaMouseClicked
         String log = this.poleLoginu.getText();
         String pass =  this.poleHasla.getText();
-        if(klient2.setLogin(log,pass)!=0) {
+        if(KinomaniakKlientMoj2.klient2.setLogin(log,pass)!=0) {
             JOptionPane.showMessageDialog(this, "Błąd logowania, spróbuj ponownie!", 
                     "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Logowanie powiodło się!");
+            KinomaniakKlientMoj2.klient2.oknlog.setVisible(false);
+            KinomaniakKlientMoj2.klient2.okngl.setVisible(true);   
         }
+        
     }//GEN-LAST:event_przyciskLogowaniaMouseClicked
 
     /**
@@ -129,7 +136,7 @@ public class OknoLogowania extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField poleHasla;
+    private javax.swing.JPasswordField poleHasla;
     private javax.swing.JTextField poleLoginu;
     private javax.swing.JButton przyciskLogowania;
     // End of variables declaration//GEN-END:variables

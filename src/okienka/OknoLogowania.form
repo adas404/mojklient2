@@ -25,14 +25,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="poleHasla" max="32767" attributes="0"/>
                   <Component id="przyciskLogowania" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="poleHasla" max="32767" attributes="0"/>
-                      <Component id="poleLoginu" pref="128" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="poleLoginu" pref="128" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="198" max="32767" attributes="0"/>
           </Group>
@@ -47,8 +45,8 @@
               <Component id="poleLoginu" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="poleHasla" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="poleHasla" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="przyciskLogowania" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="69" max="32767" attributes="0"/>
@@ -58,8 +56,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="poleLoginu">
-    </Component>
-    <Component class="javax.swing.JTextField" name="poleHasla">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -79,6 +75,12 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="przyciskLogowaniaMouseClicked"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="poleHasla">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="poleHasla"/>
+        <Property name="name" type="java.lang.String" value="poleHasla" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
