@@ -4,6 +4,9 @@
  */
 package okienka;
 
+import javax.swing.JOptionPane;
+import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
+
 /**
  *
  * @author Adam
@@ -30,6 +33,8 @@ public class OknoRezerwacji extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaRezerwacji = new javax.swing.JTable();
+        usunRezerwacje = new javax.swing.JButton();
+        resPowrot = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,21 +48,60 @@ public class OknoRezerwacji extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelaRezerwacji);
 
+        usunRezerwacje.setText("Usuń rezerwacje");
+        usunRezerwacje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usunRezerwacjeActionPerformed(evt);
+            }
+        });
+
+        resPowrot.setText("Powrót");
+        resPowrot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resPowrotActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(resPowrot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(usunRezerwacje)
+                .addGap(289, 289, 289))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 181, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usunRezerwacje)
+                    .addComponent(resPowrot))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void usunRezerwacjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usunRezerwacjeActionPerformed
+        // TODO add your handling code here:
+        int Wiersz =tabelaRezerwacji.getSelectedRow();
+        Object imnaz =(String)tabelaRezerwacji.getValueAt(Wiersz, 0);
+        KinomaniakKlientMoj2.klient2.goToCancelRes((String)imnaz);
+        System.out.println("Stirng"+imnaz);
+        JOptionPane.showMessageDialog(null,imnaz);
+    }//GEN-LAST:event_usunRezerwacjeActionPerformed
+
+    private void resPowrotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resPowrotActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.oknrez.setVisible(false);
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+    }//GEN-LAST:event_resPowrotActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,6 +139,8 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton resPowrot;
     private javax.swing.JTable tabelaRezerwacji;
+    private javax.swing.JButton usunRezerwacje;
     // End of variables declaration//GEN-END:variables
 }

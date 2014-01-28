@@ -33,8 +33,18 @@ public class OknoLogowania extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         przyciskLogowania = new javax.swing.JButton();
         poleHasla = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Park Rozrywki K&K&A Entertainment");
+        setPreferredSize(new java.awt.Dimension(600, 600));
+        setResizable(false);
+
+        poleLoginu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                poleLoginuActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Login:");
 
@@ -51,35 +61,47 @@ public class OknoLogowania extends javax.swing.JFrame {
         poleHasla.setToolTipText("poleHasla");
         poleHasla.setName("poleHasla"); // NOI18N
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/wet_roller_coaster.jpg"))); // NOI18N
+        jLabel3.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(poleHasla)
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(przyciskLogowania)
-                    .addComponent(jLabel2)
+                    .addComponent(poleLoginu, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(poleLoginu, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
-                .addContainerGap(198, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(poleHasla, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(400, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(poleLoginu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(poleLoginu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(poleHasla, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(poleHasla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(przyciskLogowania)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGap(62, 62, 62))
         );
+
+        getAccessibleContext().setAccessibleName("Park Rozrywki");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -97,6 +119,10 @@ public class OknoLogowania extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_przyciskLogowaniaMouseClicked
+
+    private void poleLoginuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poleLoginuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_poleLoginuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,6 +162,7 @@ public class OknoLogowania extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField poleHasla;
     private javax.swing.JTextField poleLoginu;
     private javax.swing.JButton przyciskLogowania;
