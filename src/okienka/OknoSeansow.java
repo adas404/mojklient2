@@ -78,14 +78,14 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
         for (int i=0;i<shss.length-1;i++){
                     button[i] = new JButton();          
-                    button[i].setSize(250,60);
-                    System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
+                    button[i].setSize(250,60); 
+                   System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
                             +"sala: "+shss[i].getRoom().getID()+"\n");
-                    button[i].setText(shss[i].getMovie().getName()+"\n"+shss[i].getFormatted());
+                    button[i].setText("<html>"+shss[i].getMovie().getName()+"<br />"+shss[i].getFormatted()+"</html>");
                     if (shss[i].getRoom().getID()==1){
                         button[i].setLocation(30,y+(i1*61));
                         i1++;
-                        button[i].setName("Przycisk1");
+                        button[i].setName("Przycisk1"+shss[i].getID());
                     }
                     if (shss[i].getRoom().getID()==2){
                         button[i].setLocation(280,y+(i2*61));
@@ -143,13 +143,14 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         JButton zrodlo = (JButton) ae.getSource();
+//        System.out.println((String)zrodlo.get);
         if (zrodlo.getName().equals("Przycisk1")){
             System.out.println("oto1");
         }
           if (zrodlo.getName().equals("Przycisk2")){
             System.out.println("oto2");
         }
-          if (zrodlo.getName().equals("Przycisk1")){
+          if (zrodlo.getName().equals("Przycisk3")){
             System.out.println("oto3");
         }
         
