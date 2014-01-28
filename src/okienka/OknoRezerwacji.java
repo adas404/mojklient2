@@ -5,6 +5,9 @@
 package okienka;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import kinomaniak_objs.Res;
+import kinomaniak_objs.Show;
 import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 
 /**
@@ -18,10 +21,12 @@ public class OknoRezerwacji extends javax.swing.JFrame {
      */
     public OknoRezerwacji() {
         initComponents();
+        
     }
     public javax.swing.JTable getTabela(){
         return tabelaRezerwacji;
 }
+    public DefaultTableModel tab;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,12 +100,34 @@ public class OknoRezerwacji extends javax.swing.JFrame {
         KinomaniakKlientMoj2.klient2.goToCancelRes((String)imnaz);
         System.out.println("Stirng"+imnaz);
         JOptionPane.showMessageDialog(null,imnaz);
+        this.usunTabele();
+        this.stworzTabele();
+        tabelaRezerwacji.revalidate();
+        tabelaRezerwacji.repaint();
+         KinomaniakKlientMoj2.klient2.oknrez.revalidate();
+        KinomaniakKlientMoj2.klient2.oknrez.repaint();
     }//GEN-LAST:event_usunRezerwacjeActionPerformed
-
+    
+    public void stworzTabele(){
+         tab = (DefaultTableModel)KinomaniakKlientMoj2.klient2.oknrez.getTabela().getModel();
+         KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
+         Res[] tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
+         Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
+         for (int i=0;i<tabres.length;i++){
+            tab.addRow(new Object[]{tabres[i].getName(),shss[tabres[i].getShowID()].getMovie().getName(),tabres[i].formatSeats(),tabres[i].isok()});
+         
+         }
+         tab.fireTableDataChanged(); 
+      
+    }
+    public void usunTabele(){
+        tab.setRowCount(0);
+    }
     private void resPowrotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resPowrotActionPerformed
         // TODO add your handling code here:
         KinomaniakKlientMoj2.klient2.oknrez.setVisible(false);
         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+        this.usunTabele();
     }//GEN-LAST:event_resPowrotActionPerformed
 
     /**

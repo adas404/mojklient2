@@ -21,7 +21,6 @@ public class OknoGlowne extends javax.swing.JFrame {
     public OknoGlowne() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,8 +31,10 @@ public class OknoGlowne extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        listasenasow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButton1.setText("Wyświetl rezerwacje");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -42,19 +43,30 @@ public class OknoGlowne extends javax.swing.JFrame {
             }
         });
 
+        listasenasow.setText("Lista seansów");
+        listasenasow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listasenasowActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(217, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addContainerGap(417, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(listasenasow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(223, Short.MAX_VALUE)
+                .addContainerGap(482, Short.MAX_VALUE)
+                .addComponent(listasenasow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(54, 54, 54))
         );
@@ -65,17 +77,17 @@ public class OknoGlowne extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
          KinomaniakKlientMoj2.klient2.okngl.setVisible(false);
          KinomaniakKlientMoj2.klient2.oknrez.setVisible(true);
-         DefaultTableModel tab = (DefaultTableModel)KinomaniakKlientMoj2.klient2.oknrez.getTabela().getModel();
-         KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
-         Res[] tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
-         Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
-         for (int i=0;i<tabres.length;i++){
-            tab.addRow(new Object[]{tabres[i].getName(),shss[tabres[i].getShowID()].getMovie().getName(),tabres[i].formatSeats(),tabres[i].isok()});
-         
-         }
+         KinomaniakKlientMoj2.klient2.oknrez.stworzTabele();
          //tab.addRow(new Object[]{0,1,2,3});
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void listasenasowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listasenasowActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(false);
+        KinomaniakKlientMoj2.klient2.oknseans.setVisible(true);
+        KinomaniakKlientMoj2.klient2.oknseans.rysujPrzyciski();
+    }//GEN-LAST:event_listasenasowActionPerformed
+   
     /**
      * @param args the command line arguments
      */
@@ -112,5 +124,6 @@ public class OknoGlowne extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton listasenasow;
     // End of variables declaration//GEN-END:variables
 }

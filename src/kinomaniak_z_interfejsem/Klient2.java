@@ -23,6 +23,7 @@ import kinomaniak_interfejs.*;
 import okienka.OknoGlowne;
 import okienka.OknoLogowania;
 import okienka.OknoRezerwacji;
+import okienka.OknoSeansow;
 
 /**
  *
@@ -48,6 +49,7 @@ public class Klient2 implements KinomaniakInterface {
     public OknoLogowania oknlog = new OknoLogowania();
     public OknoGlowne okngl = new OknoGlowne();
     public OknoRezerwacji oknrez = new OknoRezerwacji();
+    public OknoSeansow oknseans = new OknoSeansow();
 
     /**
      * metoda a'la konstruktor klasy, wywoływana zaraz po utworzeniu obiektu
@@ -166,7 +168,7 @@ public class Klient2 implements KinomaniakInterface {
         ///////////////////////////////////////////////
         tmp = (String) odbierzO();
         if (!tmp.equals("!GDATA!")) {
-            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+            System.out.println("Błąd serwera, oczekiwano !Gdata! DOstałem"+tmp);
             rozlacz();
             return -1;
         } else {
@@ -198,6 +200,13 @@ public class Klient2 implements KinomaniakInterface {
             return -1;
         }
         wyslijO((Res) res);
+        tmp = (String) odbierzO();
+        if (!tmp.equals("!OK!")) {
+            System.out.println("Błąd serwera, ocekiwano OK a dostałem"+tmp);
+            rozlacz();
+            return -1;
+        }else 
+            System.out.println("Dostałem potwierdzenie anulowania rezerwacji"+tmp);
         return 0;
     }
 
@@ -221,7 +230,7 @@ public class Klient2 implements KinomaniakInterface {
         ///////////////////////////////////////////////
         tmp = (String) odbierzO();
         if (!tmp.equals("!GDATA!")) {
-            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+            System.out.println("Błąd serwera, oczekiwano !Gdata! DOstałem"+tmp);
             rozlacz();
             return -1;
         } else {
@@ -285,7 +294,7 @@ public class Klient2 implements KinomaniakInterface {
         tmp = (String) odbierzO();
         System.out.println("tmp" + tmp);
         if (!tmp.equals("!GDATA!")) {
-            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+            System.out.println("Błąd serwera, oczekiwano !Gdata! DOstałem"+tmp);
             rozlacz();
             return null;
         } else {
@@ -453,7 +462,7 @@ public class Klient2 implements KinomaniakInterface {
         ///////////////////////////////////////////////////////
         tmp = (String) odbierzO();
         if (!tmp.equals("!GDATA!")) {
-            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+            System.out.println("Błąd serwera, oczekiwano !Gdata!, a dostałem"+tmp);
             rozlacz();
             return -1;
         }
