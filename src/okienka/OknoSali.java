@@ -92,7 +92,6 @@ private void wyczyscOkno(){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 850));
-        setResizable(false);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/ekranprzes.jpg"))); // NOI18N
 

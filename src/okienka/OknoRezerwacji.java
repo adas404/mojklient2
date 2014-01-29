@@ -113,8 +113,10 @@ public class OknoRezerwacji extends javax.swing.JFrame {
          KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
          Res[] tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
          Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
-         for (int i=0;i<tabres.length;i++){
-            tab.addRow(new Object[]{tabres[i].getName(),shss[tabres[i].getShowID()].getMovie().getName(),tabres[i].formatSeats(),tabres[i].isok()});
+         for (int i=0;i<tabres.length;i++){ //tabres[i].getShowID()
+             int id = 0;
+             for(int j = 0; j < shss.length; j++) if(shss[j].getID() == tabres[i].getShowID()) id = j;
+            tab.addRow(new Object[]{tabres[i].getName(),shss[id].getMovie().getName(),tabres[i].formatSeats(),tabres[i].isok()});
          
          }
          tab.fireTableDataChanged(); 
