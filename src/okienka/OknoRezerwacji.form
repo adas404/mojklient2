@@ -143,6 +143,9 @@
         <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Ukryj sprzedane"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sprzedaneActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

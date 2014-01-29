@@ -115,7 +115,7 @@ public class OknoLogowania extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Logowanie powiodło się!");
             KinomaniakKlientMoj2.klient2.oknlog.setVisible(false);
-            KinomaniakKlientMoj2.klient2.okngl.setVisible(true);   
+            KinomaniakKlientMoj2.klient2.okngl.setVisible(true); 
         }
         
     }//GEN-LAST:event_przyciskLogowaniaMouseClicked

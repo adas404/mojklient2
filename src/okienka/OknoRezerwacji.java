@@ -19,7 +19,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     /**
      * Creates new form OknoRezerwacji
      */
-    Res[] tabres = null;
+    Res[] tabres = new Res[100];
     public OknoRezerwacji() {
         initComponents();
         
@@ -87,6 +87,11 @@ public class OknoRezerwacji extends javax.swing.JFrame {
 
         sprzedane.setSelected(true);
         sprzedane.setText("Ukryj sprzedane");
+        sprzedane.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sprzedaneActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,20 +143,20 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     public void stworzTabele(){
          tab = (DefaultTableModel)KinomaniakKlientMoj2.klient2.oknrez.getTabela().getModel();
          KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
-         tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
+         Res[] tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
          Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
          for (int i=0;i<tabres.length;i++){ //tabres[i].getShowID()
              int id = 0;
-             for(int j = 0; j < shss.length; j++) if(shss[j].getID() == tabres[i].getShowID()) id = j;
+             for(int j = 0; j < shss.length-1; j++) if(shss[j].getID() == tabres[i].getShowID()) id = j;
+             if(tabres[i].isok()) 
+                if (sprzedane.isSelected())
+                    continue;
                 tab.addRow(new Object[]{tabres[i].getName(),shss[id].getMovie().getName(),tabres[i].formatSeats(),tabres[i].getShowID(),
                 shss[i].getFormatted(),tabres[i].isok(),
                 });
          
          }
-         if (sprzedane.isSelected())
-            for (int i=0;i<tabres.length;i++){
-                if(tabres[i].isok())            
-                    tab.removeRow(i);}
+         
          tab.fireTableDataChanged(); 
       
     }
@@ -179,8 +184,20 @@ public class OknoRezerwacji extends javax.swing.JFrame {
                 if((tabres[i].getName().equals(imn))&&(tabres[i].getShowID()==tmp)){
                     KinomaniakKlientMoj2.klient2.oknsali.poOdbiorze(tabres[i].getSeats());
            }
+          KinomaniakKlientMoj2.klient2.goToCancelRes((String)imn);
          }
+         this.usunTabele();
     }//GEN-LAST:event_odbierzActionPerformed
+
+    private void sprzedaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sprzedaneActionPerformed
+        // TODO add your handling code here:
+      //  if (!sprzedane.isSelected()){
+            this.usunTabele();
+            this.stworzTabele();
+             KinomaniakKlientMoj2.klient2.oknrez.revalidate();
+            KinomaniakKlientMoj2.klient2.oknrez.repaint();
+       // }
+    }//GEN-LAST:event_sprzedaneActionPerformed
 
     /**
      * @param args the command line arguments

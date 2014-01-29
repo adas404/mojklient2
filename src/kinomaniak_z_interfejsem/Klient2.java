@@ -20,6 +20,7 @@ import kinomaniak_objs.Res;
 import kinomaniak_objs.Show;
 import kinomaniak_objs.User;
 import kinomaniak_interfejs.*;
+import kinomaniak_objs.Product;
 import okienka.OknoGlowne;
 import okienka.OknoLogowania;
 import okienka.OknoRezerwacji;
@@ -47,6 +48,7 @@ public class Klient2 implements KinomaniakInterface {
     String imie_i_nazwisko;
     int id_seansu;
     int[][] tmp_miejsca;
+    Product[] produkty;
     public OknoLogowania oknlog = new OknoLogowania();
     public OknoGlowne okngl = new OknoGlowne();
     public OknoRezerwacji oknrez = new OknoRezerwacji();
@@ -476,6 +478,33 @@ public class Klient2 implements KinomaniakInterface {
             return -2;
         }
         rezerwacje = (Res[]) odbierzO();
+        return 0;
+    }
+    
+    public int pobierzProdukty() {
+        wyslijO((String) "!CMD!");
+        tmp = (String) odbierzO();
+        if (tmp.equals("!OK!")) {
+            wyslijO((int) 11);
+        } else {
+            System.out.println("NOT OK");
+            return -1;
+        }
+        ///////////////////////////////////////////////////////
+        tmp = (String) odbierzO();
+        if (!tmp.equals("!GDATA!")) {
+            System.out.println("Błąd serwera, oczekiwano !Gdata!, a dostałem"+tmp);
+            rozlacz();
+            return -1;
+        }
+        wyslijO((String) "!OK!");
+        tmp = (String) odbierzO();
+        System.out.println("tmp" + tmp);
+        if (tmp.equals("!NOPROD!")) {
+            System.out.println("Nie ma produktów!");
+            return -3;
+        }
+        produkty = (Product[]) odbierzO();
         return 0;
     }
 

@@ -227,6 +227,7 @@ private void wyczyscOkno(){
         KinomaniakKlientMoj2.klient2.sprzedajBilet(idsh,miejsca);
         KinomaniakKlientMoj2.klient2.oknsali.setVisible(false);
         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+        KinomaniakKlientMoj2.klient2.okngl.dodajDoKoszyka("Kino", g*20);
         this.wyczyscOkno();
     }//GEN-LAST:event_sprzedajActionPerformed
     
