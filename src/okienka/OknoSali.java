@@ -4,6 +4,11 @@
  */
 package okienka;
 
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
+
 /**
  *
  * @author Adam
@@ -16,7 +21,40 @@ public class OknoSali extends javax.swing.JFrame {
     public OknoSali() {
         initComponents();
     }
-
+    private JCheckBox[][] checkbox = new JCheckBox[10][10];
+    int idsh;
+public void rysujSale(int id_show){
+    idsh=id_show;
+    int [][] sala = KinomaniakKlientMoj2.klient2.czyZajete(id_show);    
+    for(int i=0;i<=9;i++){
+        for(int j=0;j<=9;j++){
+            checkbox[i][j] = new JCheckBox();
+            checkbox[i][j].setSize(60,60);
+            checkbox[i][j].setLocation((i*60),110+(j*60));
+            checkbox[i][j].setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/zarezerwowanex60.jpg")));
+            checkbox[i][j].setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/wolnex60.jpg")));
+            checkbox[i][j].setDisabledSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/zajetex60.jpg")));
+            checkbox[i][j].setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/wybranex60.jpg")));
+            if (sala[i][j]==1){
+                checkbox[i][j].setEnabled(false);
+            }else if(sala[i][j]==2){
+                 checkbox[i][j].setSelected(true);
+                 checkbox[i][j].setEnabled(false);
+            }
+                
+            
+            KinomaniakKlientMoj2.klient2.oknsali.add(checkbox[i][j]);
+            KinomaniakKlientMoj2.klient2.oknsali.revalidate();
+            KinomaniakKlientMoj2.klient2.oknsali.repaint();
+        }
+    }
+}
+private void wyczyscOkno(){
+       for(int i=0;i<=9;i++){
+            for(int j=0;j<=9;j++){
+                 KinomaniakKlientMoj2.klient2.oknsali.remove(checkbox[i][j]);
+            }}
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,31 +64,119 @@ public class OknoSali extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBox1 = new javax.swing.JCheckBox();
+        FormularzRezerwacji = new javax.swing.JDialog();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
+
+        javax.swing.GroupLayout FormularzRezerwacjiLayout = new javax.swing.GroupLayout(FormularzRezerwacji.getContentPane());
+        FormularzRezerwacji.getContentPane().setLayout(FormularzRezerwacjiLayout);
+        FormularzRezerwacjiLayout.setHorizontalGroup(
+            FormularzRezerwacjiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FormularzRezerwacjiLayout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(201, Short.MAX_VALUE))
+        );
+        FormularzRezerwacjiLayout.setVerticalGroup(
+            FormularzRezerwacjiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FormularzRezerwacjiLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(194, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(600, 850));
+        setResizable(false);
 
-        jCheckBox1.setText("jCheckBox1");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/ekranprzes.jpg"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setText("Ekran:");
+
+        jButton1.setText("Powrót");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Zarezerwuj");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jCheckBox1)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(208, 208, 208)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(283, 283, 283)
+                        .addComponent(jButton2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(jCheckBox1)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 695, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.oknsali.setVisible(false);
+        KinomaniakKlientMoj2.klient2.oknseans.setVisible(true);
+        KinomaniakKlientMoj2.klient2.oknseans.repaint();
+                this.wyczyscOkno();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String im = JOptionPane.showInputDialog("Podaj imie:");
+        String naz = JOptionPane.showInputDialog("Podaj nazwisko:");
+        String imnaz=im+" "+naz;
+        int[][] miejsca = new int[10][2];
+        int f=0;int g=0;
+        System.out.println("Dostałem z formularza:"+imnaz);
+        for(int i=0;i<=9;i++){
+            for(int j=0;j<=9;j++){ 
+                    if(checkbox[i][j].isSelected() && checkbox[i][j].isEnabled()){
+                        miejsca[f][0]=i;
+                        miejsca[f][1]=j;
+                        f++;
+                    }
+            }
+        }
+        KinomaniakKlientMoj2.klient2.goToReserve(imnaz, idsh, miejsca);
+        KinomaniakKlientMoj2.klient2.oknsali.setVisible(false);
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+        this.wyczyscOkno();
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -87,6 +213,11 @@ public class OknoSali extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JDialog FormularzRezerwacji;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

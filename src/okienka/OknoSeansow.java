@@ -22,7 +22,7 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
     public OknoSeansow() {
         initComponents();
     }
-    JButton[] button = new JButton[30];
+    private JButton[] button = new JButton[30];
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,11 +75,11 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
     void rysujPrzyciski() {
         int x=50,y=50;int i1=1;int i2=1;int i3=1;
         Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
-        for (int i=0;i<shss.length-1;i++){
+        for (int i=0;i<=shss.length-1;i++){
                     button[i] = new JButton();          
                     button[i].setSize(250,60); 
                    System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
-                            +"sala: "+shss[i].getRoom().getID());
+                            +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
                    button[i].setName(""+shss[i].getID());
                     button[i].setText("<html>"+shss[i].getMovie().getName()+"<br />"+shss[i].getFormatted()+"</html>");
                     if (shss[i].getRoom().getID()==1){
@@ -144,6 +144,11 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
+         int tmp = Integer.parseInt(zrodlo.getName());
+         KinomaniakKlientMoj2.klient2.oknsali.setVisible(true);
+         KinomaniakKlientMoj2.klient2.oknseans.setVisible(false);
+         KinomaniakKlientMoj2.klient2.oknsali.rysujSale(tmp);
+
         //To change body of generated methods, choose Tools | Templates.
     }
 }
