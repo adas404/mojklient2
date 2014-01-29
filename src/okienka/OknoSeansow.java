@@ -35,6 +35,7 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -44,6 +45,13 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         jLabel2.setText("Sala 2:");
 
         jLabel3.setText("Sala 3:");
+
+        jButton1.setText("Powrót");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -57,11 +65,17 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(71, 71, 71))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -71,6 +85,18 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void wyczyscOkno(){
+       for(int i=0;i<=9;i++){
+                 KinomaniakKlientMoj2.klient2.oknsali.remove(button[i]);
+            }}
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.oknseans.setVisible(false);
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+        KinomaniakKlientMoj2.klient2.oknseans.repaint();
+        this.wyczyscOkno();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     void rysujPrzyciski() {
         int x=50,y=50;int i1=1;int i2=1;int i3=1;
@@ -134,6 +160,7 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

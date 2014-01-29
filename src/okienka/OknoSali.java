@@ -49,6 +49,14 @@ public void rysujSale(int id_show){
         }
     }
 }
+public void poOdbiorze(int[][] miejsca){
+    for(int i=0;i<miejsca.length;i++){
+        checkbox[miejsca[i][0]][miejsca[i][1]].setSelected(true);
+        checkbox[miejsca[i][0]][miejsca[i][1]].setEnabled(true);
+    }
+    KinomaniakKlientMoj2.klient2.oknsali.revalidate();
+    KinomaniakKlientMoj2.klient2.oknsali.repaint();
+}
 private void wyczyscOkno(){
        for(int i=0;i<=9;i++){
             for(int j=0;j<=9;j++){
@@ -70,6 +78,7 @@ private void wyczyscOkno(){
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        sprzedaj = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -112,6 +121,13 @@ private void wyczyscOkno(){
             }
         });
 
+        sprzedaj.setText("Sprzedaj");
+        sprzedaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sprzedajActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,7 +141,9 @@ private void wyczyscOkno(){
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(283, 283, 283)
+                        .addGap(146, 146, 146)
+                        .addComponent(sprzedaj)
+                        .addGap(64, 64, 64)
                         .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -139,7 +157,8 @@ private void wyczyscOkno(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 695, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(sprzedaj))
                 .addGap(20, 20, 20))
         );
 
@@ -159,15 +178,23 @@ private void wyczyscOkno(){
         String im = JOptionPane.showInputDialog("Podaj imie:");
         String naz = JOptionPane.showInputDialog("Podaj nazwisko:");
         String imnaz=im+" "+naz;
-        int[][] miejsca = new int[10][2];
+        //int[][] miejsca = new int[10][2];
         int f=0;int g=0;
         System.out.println("Dostałem z formularza:"+imnaz);
         for(int i=0;i<=9;i++){
             for(int j=0;j<=9;j++){ 
                     if(checkbox[i][j].isSelected() && checkbox[i][j].isEnabled()){
-                        miejsca[f][0]=i;
-                        miejsca[f][1]=j;
                         f++;
+                    }
+            }
+        }
+        int[][] miejsca =new int[f][2];
+        for(int i=0;i<=9;i++){
+            for(int j=0;j<=9;j++){ 
+                    if(checkbox[i][j].isSelected() && checkbox[i][j].isEnabled()){
+                        miejsca[g][0]=i;
+                        miejsca[g][1]=j;
+                        g++;
                     }
             }
         }
@@ -176,6 +203,32 @@ private void wyczyscOkno(){
         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
         this.wyczyscOkno();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void sprzedajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sprzedajActionPerformed
+        // TODO add your handling code here:
+        int f=0;int g=0;
+        for(int i=0;i<=9;i++){
+            for(int j=0;j<=9;j++){ 
+                    if(checkbox[i][j].isSelected() && checkbox[i][j].isEnabled()){
+                        f++;
+                    }
+            }
+        }
+        int[][] miejsca =new int[f][2];
+        for(int i=0;i<=9;i++){
+            for(int j=0;j<=9;j++){ 
+                    if(checkbox[i][j].isSelected() && checkbox[i][j].isEnabled()){
+                        miejsca[g][0]=i;
+                        miejsca[g][1]=j;
+                        g++;
+                    }
+            }
+        }
+        KinomaniakKlientMoj2.klient2.sprzedajBilet(idsh,miejsca);
+        KinomaniakKlientMoj2.klient2.oknsali.setVisible(false);
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+        this.wyczyscOkno();
+    }//GEN-LAST:event_sprzedajActionPerformed
     
     /**
      * @param args the command line arguments
@@ -218,5 +271,6 @@ private void wyczyscOkno(){
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton sprzedaj;
     // End of variables declaration//GEN-END:variables
 }

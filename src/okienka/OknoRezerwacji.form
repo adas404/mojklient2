@@ -29,7 +29,11 @@
               <Component id="resPowrot" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="usunRezerwacje" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="289" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="odbierz" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <Component id="sprzedane" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -41,6 +45,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="usunRezerwacje" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="resPowrot" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="odbierz" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sprzedane" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -58,15 +64,27 @@
         <Component class="javax.swing.JTable" name="tabelaRezerwacji">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="0">
-                <Column editable="true" title="Imie i nazwisko" type="java.lang.Object"/>
-                <Column editable="true" title="ShowID" type="java.lang.Object"/>
-                <Column editable="true" title="Miejsca" type="java.lang.Object"/>
-                <Column editable="true" title="Odebrana" type="java.lang.Object"/>
+              <Table columnCount="6" rowCount="0">
+                <Column editable="false" title="Imie i nazwisko" type="java.lang.Object"/>
+                <Column editable="false" title="Film" type="java.lang.Object"/>
+                <Column editable="false" title="Miejsca" type="java.lang.Object"/>
+                <Column editable="false" title="ShowID" type="java.lang.Object"/>
+                <Column editable="false" title="Data:" type="java.lang.Object"/>
+                <Column editable="false" title="Odebrana" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -111,6 +129,20 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resPowrotActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="odbierz">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Odbierz rezerwacj&#x119;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="odbierzActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sprzedane">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Ukryj sprzedane"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

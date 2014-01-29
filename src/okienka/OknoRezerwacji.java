@@ -19,6 +19,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     /**
      * Creates new form OknoRezerwacji
      */
+    Res[] tabres = null;
     public OknoRezerwacji() {
         initComponents();
         
@@ -40,6 +41,8 @@ public class OknoRezerwacji extends javax.swing.JFrame {
         tabelaRezerwacji = new javax.swing.JTable();
         usunRezerwacje = new javax.swing.JButton();
         resPowrot = new javax.swing.JButton();
+        odbierz = new javax.swing.JButton();
+        sprzedane = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,9 +51,17 @@ public class OknoRezerwacji extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Imie i nazwisko", "ShowID", "Miejsca", "Odebrana"
+                "Imie i nazwisko", "Film", "Miejsca", "ShowID", "Data:", "Odebrana"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabelaRezerwacji);
 
         usunRezerwacje.setText("Usuń rezerwacje");
@@ -67,6 +78,16 @@ public class OknoRezerwacji extends javax.swing.JFrame {
             }
         });
 
+        odbierz.setText("Odbierz rezerwację");
+        odbierz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                odbierzActionPerformed(evt);
+            }
+        });
+
+        sprzedane.setSelected(true);
+        sprzedane.setText("Ukryj sprzedane");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,7 +98,11 @@ public class OknoRezerwacji extends javax.swing.JFrame {
                 .addComponent(resPowrot)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(usunRezerwacje)
-                .addGap(289, 289, 289))
+                .addGap(35, 35, 35)
+                .addComponent(odbierz)
+                .addGap(55, 55, 55)
+                .addComponent(sprzedane)
+                .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +111,9 @@ public class OknoRezerwacji extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usunRezerwacje)
-                    .addComponent(resPowrot))
+                    .addComponent(resPowrot)
+                    .addComponent(odbierz)
+                    .addComponent(sprzedane))
                 .addContainerGap())
         );
 
@@ -111,14 +138,20 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     public void stworzTabele(){
          tab = (DefaultTableModel)KinomaniakKlientMoj2.klient2.oknrez.getTabela().getModel();
          KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
-         Res[] tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
+         tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
          Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
          for (int i=0;i<tabres.length;i++){ //tabres[i].getShowID()
              int id = 0;
              for(int j = 0; j < shss.length; j++) if(shss[j].getID() == tabres[i].getShowID()) id = j;
-            tab.addRow(new Object[]{tabres[i].getName(),shss[id].getMovie().getName(),tabres[i].formatSeats(),tabres[i].isok()});
+                tab.addRow(new Object[]{tabres[i].getName(),shss[id].getMovie().getName(),tabres[i].formatSeats(),tabres[i].getShowID(),
+                shss[i].getFormatted(),tabres[i].isok(),
+                });
          
          }
+         if (sprzedane.isSelected())
+            for (int i=0;i<tabres.length;i++){
+                if(tabres[i].isok())            
+                    tab.removeRow(i);}
          tab.fireTableDataChanged(); 
       
     }
@@ -131,6 +164,23 @@ public class OknoRezerwacji extends javax.swing.JFrame {
         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
         this.usunTabele();
     }//GEN-LAST:event_resPowrotActionPerformed
+
+    private void odbierzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odbierzActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.oknsali.setVisible(true);
+         KinomaniakKlientMoj2.klient2.oknrez.setVisible(false);
+         int Wiersz =tabelaRezerwacji.getSelectedRow();
+         Object tmp =(int)tabelaRezerwacji.getValueAt(Wiersz, 3);
+         Object imn =(String)tabelaRezerwacji.getValueAt(Wiersz, 0);
+         System.out.println("znaleziono ShowID:"+tmp + "imie"+imn);
+         KinomaniakKlientMoj2.klient2.oknsali.rysujSale((int)tmp);
+         for(int i=0;i<tabres.length;i++){
+             String tmp2 = tabres[i].getName();
+                if((tabres[i].getName().equals(imn))&&(tabres[i].getShowID()==tmp)){
+                    KinomaniakKlientMoj2.klient2.oknsali.poOdbiorze(tabres[i].getSeats());
+           }
+         }
+    }//GEN-LAST:event_odbierzActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,7 +218,9 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton odbierz;
     private javax.swing.JButton resPowrot;
+    private javax.swing.JCheckBox sprzedane;
     private javax.swing.JTable tabelaRezerwacji;
     private javax.swing.JButton usunRezerwacje;
     // End of variables declaration//GEN-END:variables
