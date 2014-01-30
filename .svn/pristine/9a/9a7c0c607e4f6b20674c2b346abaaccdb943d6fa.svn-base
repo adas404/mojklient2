@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	logallrefupdates = true
+	bare = false
+[remote "origin"]
+	url = https://github.com/adas404/mojklient2
+	fetch = +refs/heads/master:refs/remotes/origin/master
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
