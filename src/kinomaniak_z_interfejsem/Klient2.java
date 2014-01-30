@@ -575,6 +575,10 @@ public class Klient2 implements KinomaniakInterface {
         if (tmp.equals("!GIPROD!")) {
             wyslijO(id_produktu);
         }
+        tmp = (String) odbierzO();
+        if (tmp.equals("OK!")) {
+            wyslijO("Dostałem potwierdzenie zakończenia protokołu wysłania produktu");
+        }
         return 0;
     }
 }

@@ -114,6 +114,11 @@ private void wyczyscOkno(){
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
         }
     }
+    private void usunBatony(){
+        for (int i=0;i<button.length;i++){
+            KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -159,6 +164,7 @@ private void wyczyscOkno(){
          System.out.println((String)zrodlo.getName());
          KinomaniakKlientMoj2.klient2.sprzedajProdukt(Integer.parseInt(zrodlo.getName()));
          KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
+         this.usunBatony();
          KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(false);
          KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
          
