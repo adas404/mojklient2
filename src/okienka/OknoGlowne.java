@@ -4,6 +4,10 @@
  */
 package okienka;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import kinomaniak_objs.Res;
 import kinomaniak_objs.Show;
@@ -37,6 +41,8 @@ public class OknoGlowne extends javax.swing.JFrame {
         Koszyk = new javax.swing.JTable();
         poleSumy = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        listaproduktow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -75,16 +81,33 @@ public class OknoGlowne extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Koszyk);
 
+        poleSumy.setEditable(false);
         poleSumy.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jLabel2.setText("Suma:");
+
+        jButton2.setText("Wyczyść transakcję");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        listaproduktow.setText("Lista produktów");
+        listaproduktow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaproduktowActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(417, Short.MAX_VALUE)
+                .addContainerGap(216, Short.MAX_VALUE)
+                .addComponent(listaproduktow)
+                .addGap(92, 92, 92)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -93,13 +116,18 @@ public class OknoGlowne extends javax.swing.JFrame {
                 .addGap(52, 52, 52))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(poleSumy, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(poleSumy, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,10 +138,14 @@ public class OknoGlowne extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(poleSumy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(33, 33, 33)
-                .addComponent(listasenasow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listasenasow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listaproduktow))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(54, 54, 54))
@@ -135,6 +167,18 @@ public class OknoGlowne extends javax.swing.JFrame {
         KinomaniakKlientMoj2.klient2.oknseans.setVisible(true);
         KinomaniakKlientMoj2.klient2.oknseans.rysujPrzyciski();
     }//GEN-LAST:event_listasenasowActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.czyscKoszyk();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void listaproduktowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaproduktowActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(false);
+        KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(true);
+        KinomaniakKlientMoj2.klient2.oknprodukt.rysujPrzyciski();
+    }//GEN-LAST:event_listaproduktowActionPerformed
    
     public void dodajDoKoszyka(String nazwa,int cena){
         koszyk = (DefaultTableModel)KinomaniakKlientMoj2.klient2.okngl.Koszyk.getModel();
@@ -143,6 +187,13 @@ public class OknoGlowne extends javax.swing.JFrame {
         Koszyk.repaint();
         suma+=cena;
         poleSumy.setText(Integer.toString(suma));
+    }
+    public void czyscKoszyk(){
+            koszyk.setRowCount(0);
+            suma=0;
+            poleSumy.setText(Integer.toString(suma));
+            Koszyk.revalidate();
+            Koszyk.repaint();
     }
     /**
      * @param args the command line arguments
@@ -178,12 +229,15 @@ public class OknoGlowne extends javax.swing.JFrame {
             }
         });
     }
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Koszyk;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton listaproduktow;
     private javax.swing.JButton listasenasow;
     private javax.swing.JTextField poleSumy;
     // End of variables declaration//GEN-END:variables

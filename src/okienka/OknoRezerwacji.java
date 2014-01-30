@@ -19,7 +19,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     /**
      * Creates new form OknoRezerwacji
      */
-    Res[] tabres = new Res[100];
+    Res[] tabres = null;
     public OknoRezerwacji() {
         initComponents();
         
@@ -143,7 +143,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     public void stworzTabele(){
          tab = (DefaultTableModel)KinomaniakKlientMoj2.klient2.oknrez.getTabela().getModel();
          KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
-         Res[] tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
+         tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();
          Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
          for (int i=0;i<tabres.length;i++){ //tabres[i].getShowID()
              int id = 0;
@@ -152,7 +152,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
                 if (sprzedane.isSelected())
                     continue;
                 tab.addRow(new Object[]{tabres[i].getName(),shss[id].getMovie().getName(),tabres[i].formatSeats(),tabres[i].getShowID(),
-                shss[i].getFormatted(),tabres[i].isok(),
+                shss[id].getFormatted(),tabres[i].isok(),
                 });
          
          }

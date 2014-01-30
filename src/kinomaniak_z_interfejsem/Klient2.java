@@ -23,6 +23,7 @@ import kinomaniak_interfejs.*;
 import kinomaniak_objs.Product;
 import okienka.OknoGlowne;
 import okienka.OknoLogowania;
+import okienka.OknoProduktow;
 import okienka.OknoRezerwacji;
 import okienka.OknoSali;
 import okienka.OknoSeansow;
@@ -54,6 +55,7 @@ public class Klient2 implements KinomaniakInterface {
     public OknoRezerwacji oknrez = new OknoRezerwacji();
     public OknoSeansow oknseans = new OknoSeansow();
     public OknoSali oknsali = new OknoSali();
+    public OknoProduktow oknprodukt = new OknoProduktow();
 
     /**
      * metoda a'la konstruktor klasy, wywoływana zaraz po utworzeniu obiektu
@@ -297,7 +299,7 @@ public class Klient2 implements KinomaniakInterface {
         ////////////////////////////////////////////
         tmp = (String) odbierzO();
         System.out.println("tmp" + tmp);
-        if (!tmp.equals("!GDATA!")) {
+        if (!tmp.equals("!GDATA")) {
             System.out.println("Błąd serwera, oczekiwano !Gdata! DOstałem"+tmp);
             rozlacz();
             return null;
@@ -507,7 +509,9 @@ public class Klient2 implements KinomaniakInterface {
         produkty = (Product[]) odbierzO();
         return 0;
     }
-
+      public Product[] getProdukt() {
+        return produkty;
+    }
     /**
      * metoda do bezpośredniej sprzedaży biletu
      *

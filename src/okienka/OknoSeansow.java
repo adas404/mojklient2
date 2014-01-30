@@ -38,6 +38,7 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setText("Sala 1:");
@@ -86,8 +87,8 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void wyczyscOkno(){
-       for(int i=0;i<=9;i++){
-                 KinomaniakKlientMoj2.klient2.oknsali.remove(button[i]);
+       for(int i=0;i<=29;i++){
+                 KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
             }}
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
