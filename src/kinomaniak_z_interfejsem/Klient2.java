@@ -299,7 +299,7 @@ public class Klient2 implements KinomaniakInterface {
         ////////////////////////////////////////////
         tmp = (String) odbierzO();
         System.out.println("tmp" + tmp);
-        if (!tmp.equals("!GDATA")) {
+        if (!tmp.equals("!GDATA!")) {
             System.out.println("Błąd serwera, oczekiwano !Gdata! DOstałem"+tmp);
             rozlacz();
             return null;
