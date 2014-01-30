@@ -4,6 +4,7 @@
  */
 package okienka;
 
+import java.awt.Color;
 import okienka.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,9 +68,9 @@ public class OknoProduktow extends javax.swing.JFrame implements ActionListener 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void wyczyscOkno(){
-       for(int i=0;i<=9;i++){
-                 KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
-            }}
+  //     for(int i=0;i<=9;i++){
+//                 KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
+            }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -80,18 +81,25 @@ private void wyczyscOkno(){
     }//GEN-LAST:event_jButton1ActionPerformed
 
     void rysujPrzyciski() {
-        int x=50,y=50;int i1=1;int i2=1;int i3=1;
+        int x=30,y=50;
         KinomaniakKlientMoj2.klient2.pobierzProdukty();
         Product[] produkty = KinomaniakKlientMoj2.klient2.getProdukt();
         for (int i=0;i<=produkty.length-1;i++){
                     button[i] = new JButton();          
-                    button[i].setSize(250,60); 
+                    button[i].setSize(180,100); 
                    //System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
                      //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
                     button[i].setName(""+produkty[i].getId());
-                    button[i].setText("<html>"+produkty[i].getName()+"<br />"+produkty[i].getPrice()+"</html>");
-                   
-                    button[i].setLocation(30,i*60);
+                    button[i].setText("<html>"+produkty[i].getName()+"<br />"+"Cena: "+produkty[i].getPrice()
+                            +"zł"+"<br />"+
+                            "Ilość produktu: "+produkty[i].getCount()+"</html>");
+                    if (y>500){
+                        y=50;
+                        x+=180;
+                    }
+                    button[i].setLocation(x,y);
+                    button[i].setBackground(Color.GREEN);
+                     y+=100;
                     KinomaniakKlientMoj2.klient2.oknprodukt.add(button[i]);
                     button[i].addActionListener(this);
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
@@ -140,6 +148,7 @@ private void wyczyscOkno(){
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
+         
         
 
         //To change body of generated methods, choose Tools | Templates.

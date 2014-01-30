@@ -183,9 +183,9 @@ public class OknoRezerwacji extends javax.swing.JFrame {
              String tmp2 = tabres[i].getName();
                 if((tabres[i].getName().equals(imn))&&(tabres[i].getShowID()==tmp)){
                     KinomaniakKlientMoj2.klient2.oknsali.poOdbiorze(tabres[i].getSeats());
-           }
+           }}
           KinomaniakKlientMoj2.klient2.goToCancelRes((String)imn);
-         }
+         
          this.usunTabele();
     }//GEN-LAST:event_odbierzActionPerformed
 
