@@ -549,4 +549,32 @@ public class Klient2 implements KinomaniakInterface {
 
         return 0;
     }
+     public int sprzedajProdukt(int id_produktu) {
+        wyslijO((String) "!CMD!");
+        tmp = (String) odbierzO();
+        if (tmp.equals("!OK!")) {
+            wyslijO((int) 12);
+        } else {
+            System.out.println("NOT OK -sprzedaj produkt. Dostałe: "+tmp);
+            return -1;
+        }
+        ///////////////////////////////////////////////////////
+        tmp = (String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
+        if (!tmp.equals("!GDATA!")) {
+            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+            rozlacz();
+            return -1;
+        }
+        wyslijO((String) "!OK!");
+        tmp = (String) odbierzO();
+        if (tmp.equals("!NOPROD!")) {
+            System.out.println("brak produktu");
+            return -1;
+        }
+        tmp = (String) odbierzO();
+        if (tmp.equals("!GIPROD!")) {
+            wyslijO(id_produktu);
+        }
+        return 0;
+    }
 }

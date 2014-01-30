@@ -90,7 +90,7 @@ private void wyczyscOkno(){
                     button[i].setSize(180,100); 
                    //System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
                      //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
-                    button[i].setName(""+i);
+                    button[i].setName(""+produkty[i].getId());
                     button[i].setText("<html>"+produkty[i].getName()+"<br />"+"Cena: "+produkty[i].getPrice()
                             +"zł"+"<br />"+
                             "Ilość produktu: "+produkty[i].getCount()+"</html>");
@@ -157,7 +157,7 @@ private void wyczyscOkno(){
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
-         produkty[Integer.parseInt(zrodlo.getName())].buy();
+         KinomaniakKlientMoj2.klient2.sprzedajProdukt(Integer.parseInt(zrodlo.getName()));
          KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
          KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(false);
          KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
