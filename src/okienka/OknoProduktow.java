@@ -4,26 +4,28 @@
  */
 package okienka;
 
-
+import okienka.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import kinomaniak_objs.Product;
 import kinomaniak_objs.Show;
+import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 
 /**
  *
  * @author Adam
  */
-public class OknoProduktow extends javax.swing.JFrame {
+public class OknoProduktow extends javax.swing.JFrame implements ActionListener {
 
     /**
-     * Creates new form OknoProduktow
+     * Creates new form OknoSeansow
      */
     public OknoProduktow() {
         initComponents();
     }
-private JButton[] button = new JButton[30];
+    private JButton[] button = new JButton[30];
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,40 +35,68 @@ private JButton[] button = new JButton[30];
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 600));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jButton1.setText("Powrót");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(523, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(566, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-void rysujPrzyciski() {
+private void wyczyscOkno(){
+       for(int i=0;i<=9;i++){
+                 KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
+            }}
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(false);
+        KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+        KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
+        this.wyczyscOkno();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    void rysujPrzyciski() {
         int x=50,y=50;int i1=1;int i2=1;int i3=1;
         KinomaniakKlientMoj2.klient2.pobierzProdukty();
         Product[] produkty = KinomaniakKlientMoj2.klient2.getProdukt();
         for (int i=0;i<=produkty.length-1;i++){
                     button[i] = new JButton();          
-                    button[i].setSize(150,150); 
-                //  System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
-                 //           +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
-                   button[i].setName(""+produkty[i].getId());
+                    button[i].setSize(250,60); 
+                   //System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
+                     //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
+                    button[i].setName(""+produkty[i].getId());
                     button[i].setText("<html>"+produkty[i].getName()+"<br />"+produkty[i].getPrice()+"</html>");
-                    button[i].setLocation(30,i*150);
+                   
+                    button[i].setLocation(30,i*60);
                     KinomaniakKlientMoj2.klient2.oknprodukt.add(button[i]);
                     button[i].addActionListener(this);
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
         }
     }
-
     /**
      * @param args the command line arguments
      */
@@ -84,29 +114,34 @@ void rysujPrzyciski() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OknoProduktow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OknoSeansow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OknoProduktow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OknoSeansow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OknoProduktow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OknoSeansow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OknoProduktow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OknoSeansow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OknoProduktow().setVisible(true);
+                new OknoSeansow().setVisible(true);
             }
         });
     }
-public void actionPerformed(ActionEvent e)
-{
-    
-}
-}
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        JButton zrodlo = (JButton) ae.getSource();
+//        System.out.println((String)zrodlo.get)
+         System.out.println((String)zrodlo.getName());
+        
+
+        //To change body of generated methods, choose Tools | Templates.
+    }
+}

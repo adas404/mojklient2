@@ -87,7 +87,7 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void wyczyscOkno(){
-       for(int i=0;i<=29;i++){
+       for(int i=0;i<=9;i++){
                  KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
             }}
     
