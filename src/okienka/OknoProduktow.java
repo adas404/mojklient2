@@ -4,8 +4,8 @@
  */
 package okienka;
 
+
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import kinomaniak_objs.Product;
 import kinomaniak_objs.Show;
@@ -62,10 +62,11 @@ void rysujPrzyciski() {
                     button[i].setText("<html>"+produkty[i].getName()+"<br />"+produkty[i].getPrice()+"</html>");
                     button[i].setLocation(30,i*150);
                     KinomaniakKlientMoj2.klient2.oknprodukt.add(button[i]);
-                    button[i].addActionListener((ActionListener) this);
+                    button[i].addActionListener(this);
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -100,15 +101,12 @@ void rysujPrzyciski() {
             }
         });
     }
-    public void actionPerformed(ActionEvent ae) {
-        JButton zrodlo = (JButton) ae.getSource();
-//        System.out.println((String)zrodlo.get)
-         System.out.println((String)zrodlo.getName());
-         int tmp = Integer.parseInt(zrodlo.getName());
-         KinomaniakKlientMoj2.klient2.oknsali.setVisible(true);
-         KinomaniakKlientMoj2.klient2.oknseans.setVisible(false);
-         KinomaniakKlientMoj2.klient2.oknsali.rysujSale(tmp);
-    }
+public void actionPerformed(ActionEvent e)
+{
+    
+}
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+
