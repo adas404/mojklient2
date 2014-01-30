@@ -26,6 +26,7 @@ public class OknoProduktow extends javax.swing.JFrame implements ActionListener 
     public OknoProduktow() {
         initComponents();
     }
+    private Product[] produkty = new Product[30];
     private JButton[] button = new JButton[30];
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,13 +84,13 @@ private void wyczyscOkno(){
     void rysujPrzyciski() {
         int x=30,y=50;
         KinomaniakKlientMoj2.klient2.pobierzProdukty();
-        Product[] produkty = KinomaniakKlientMoj2.klient2.getProdukt();
-        for (int i=0;i<=produkty.length-1;i++){
+        produkty = KinomaniakKlientMoj2.klient2.getProdukt();
+        for (int i=0;i<produkty.length;i++){
                     button[i] = new JButton();          
                     button[i].setSize(180,100); 
                    //System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
                      //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
-                    button[i].setName(""+produkty[i].getId());
+                    button[i].setName(""+i);
                     button[i].setText("<html>"+produkty[i].getName()+"<br />"+"Cena: "+produkty[i].getPrice()
                             +"zł"+"<br />"+
                             "Ilość produktu: "+produkty[i].getCount()+"</html>");
@@ -98,8 +99,16 @@ private void wyczyscOkno(){
                         x+=180;
                     }
                     button[i].setLocation(x,y);
-                    button[i].setBackground(Color.GREEN);
-                     y+=100;
+                    y+=100;
+                    switch(produkty[i].getType()){
+                        case 1: button[i].setBackground(Color.BLUE);break;
+                        case 2: button[i].setBackground(Color.GREEN);break;
+                        case 3: button[i].setBackground(Color.RED);break;
+                        case 4: button[i].setBackground(Color.PINK);break;
+                        case 5: button[i].setBackground(Color.ORANGE);break;    
+                    }
+                    if(!produkty[i].buy())
+                        button[i].setEnabled(false);
                     KinomaniakKlientMoj2.klient2.oknprodukt.add(button[i]);
                     button[i].addActionListener(this);
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
@@ -148,6 +157,11 @@ private void wyczyscOkno(){
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
+         produkty[Integer.parseInt(zrodlo.getName())].buy();
+         KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
+         KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(false);
+         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+         
          
         
 
