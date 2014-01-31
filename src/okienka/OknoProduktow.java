@@ -9,6 +9,7 @@ import okienka.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import kinomaniak_objs.Product;
 import kinomaniak_objs.Show;
 import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
@@ -92,8 +93,7 @@ private void wyczyscOkno(){
                      //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
                     button[i].setName(""+produkty[i].getId());
                     button[i].setText("<html>"+produkty[i].getName()+"<br />"+"Cena: "+produkty[i].getPrice()
-                            +"zł"+"<br />"+
-                            "Ilość produktu: "+produkty[i].getCount()+"</html>");
+                            +"zł"+"<br />");
                     if (y>500){
                         y=50;
                         x+=180;
@@ -107,16 +107,20 @@ private void wyczyscOkno(){
                         case 4: button[i].setBackground(Color.PINK);break;
                         case 5: button[i].setBackground(Color.ORANGE);break;    
                     }
-                    if(!produkty[i].buy())
+                    if(produkty[i].getCount()==0)
                         button[i].setEnabled(false);
+                    System.out.println("Ilość produktu:"+produkty[i].getCount());
+                    button[i].revalidate();
                     KinomaniakKlientMoj2.klient2.oknprodukt.add(button[i]);
                     button[i].addActionListener(this);
+                    KinomaniakKlientMoj2.klient2.oknprodukt.revalidate();
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
-        }
-    }
+    }}
     private void usunBatony(){
-        button = null;
-        produkty=null;
+        for (int i=0;i<button.length;i++)
+            button[i]=null;
+        for (int i=0;i<produkty.length;i++)
+            produkty[i]=null;
         
     }
     /**
@@ -159,12 +163,16 @@ private void wyczyscOkno(){
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        this.rysujPrzyciski();
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
          KinomaniakKlientMoj2.klient2.sprzedajProdukt(Integer.parseInt(zrodlo.getName()));
+         for (int i=0;i<produkty.length;i++)
+             if(Integer.parseInt(zrodlo.getName())==produkty[i].getId())
+                 KinomaniakKlientMoj2.klient2.okngl.dodajDoKoszyka(produkty[i].getName(),produkty[i].getPrice());
          KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
-         this.usunBatony();
+      //   this.usunBatony();
          KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(false);
          KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
          

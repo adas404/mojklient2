@@ -166,6 +166,8 @@ public class OknoGlowne extends javax.swing.JFrame {
         KinomaniakKlientMoj2.klient2.okngl.setVisible(false);
         KinomaniakKlientMoj2.klient2.oknseans.setVisible(true);
         KinomaniakKlientMoj2.klient2.oknseans.rysujPrzyciski();
+    //    KinomaniakKlientMoj2.klient2.oknseans.rysujPrzyciski();
+       // KinomaniakKlientMoj2.klient2.oknseans.repaint();
     }//GEN-LAST:event_listasenasowActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -178,15 +180,17 @@ public class OknoGlowne extends javax.swing.JFrame {
         KinomaniakKlientMoj2.klient2.okngl.setVisible(false);
         KinomaniakKlientMoj2.klient2.oknprodukt.setVisible(true);
         KinomaniakKlientMoj2.klient2.oknprodukt.rysujPrzyciski();
+        KinomaniakKlientMoj2.klient2.oknprodukt.rysujPrzyciski();
+        KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
     }//GEN-LAST:event_listaproduktowActionPerformed
    
-    public void dodajDoKoszyka(String nazwa,int cena){
+    public void dodajDoKoszyka(String nazwa,float cena){
         koszyk = (DefaultTableModel)KinomaniakKlientMoj2.klient2.okngl.Koszyk.getModel();
         koszyk.addRow(new Object[]{nazwa,cena});
         Koszyk.revalidate();
         Koszyk.repaint();
         suma+=cena;
-        poleSumy.setText(Integer.toString(suma));
+        poleSumy.setText(Float.toString(suma));
     }
     public void czyscKoszyk(){
             koszyk.setRowCount(0);
