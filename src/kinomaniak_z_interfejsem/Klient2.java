@@ -20,7 +20,9 @@ import kinomaniak_objs.Res;
 import kinomaniak_objs.Show;
 import kinomaniak_objs.User;
 import kinomaniak_interfejs.*;
+import kinomaniak_objs.Attraction;
 import kinomaniak_objs.Product;
+import okienka.OknoAtrakcji;
 import okienka.OknoGlowne;
 import okienka.OknoLogowania;
 import okienka.OknoProduktow;
@@ -50,12 +52,14 @@ public class Klient2 implements KinomaniakInterface {
     int id_seansu;
     int[][] tmp_miejsca;
     Product[] produkty;
+    Attraction[] atrakcje;
     public OknoLogowania oknlog = new OknoLogowania();
     public OknoGlowne okngl = new OknoGlowne();
     public OknoRezerwacji oknrez = new OknoRezerwacji();
     public OknoSeansow oknseans = new OknoSeansow();
     public OknoSali oknsali = new OknoSali();
     public OknoProduktow oknprodukt = new OknoProduktow();
+    public OknoAtrakcji oknatrakcji = new OknoAtrakcji();
 
     /**
      * metoda a'la konstruktor klasy, wywoływana zaraz po utworzeniu obiektu
@@ -579,6 +583,64 @@ public class Klient2 implements KinomaniakInterface {
         if (tmp.equals("OK!")) {
             wyslijO("Dostałem potwierdzenie zakończenia protokołu wysłania produktu");
         }
+        return 0;
+    }
+      public int pobierzAtrakcje() {
+        wyslijO((String) "!CMD!");
+        tmp = (String) odbierzO();
+        if (tmp.equals("!OK!")) {
+            wyslijO((int) 13);
+        } else {
+            System.out.println("NOT OK");
+            return -1;
+        }
+        ///////////////////////////////////////////////////////
+        tmp = (String) odbierzO();
+        if (!tmp.equals("!GDATA!")) {
+            System.out.println("Błąd serwera, oczekiwano !Gdata!, a dostałem"+tmp);
+            rozlacz();
+            return -1;
+        }
+        wyslijO((String) "!OK!");
+        tmp = (String) odbierzO();
+        System.out.println("tmp" + tmp);
+        if (tmp.equals("!NOATTR!")) {
+            System.out.println("Nie ma produktów!");
+            return -4;
+        }
+        atrakcje = (Attraction[]) odbierzO();
+        return 0;
+    }
+      public Attraction[] getAtrakcje() {
+        return atrakcje;
+    }
+          public int sprzedajAtrakcje(Attraction atrakt ) {
+        wyslijO((String) "!CMD!");
+        tmp = (String) odbierzO();
+        if (tmp.equals("!OK!")) {
+            wyslijO((int) 14);
+        } else {
+            System.out.println("NOT OK -sprzedaj atrakcje. Dostałe: "+tmp);
+            return -1;
+        }
+        ///////////////////////////////////////////////////////
+        tmp = (String) odbierzO();//Kuba ma już przekazywać konkretną ilośc miejsc gdzie pierwszy [] jest kolejnym miejscem a a drugi [0] rzędem a [1] miejscem
+        if (!tmp.equals("!GDATA!")) {
+            System.out.println("Błąd serwera, oczekiwano !Gdata!");
+            rozlacz();
+            return -1;
+        }
+        wyslijO((String) "!OK!");
+        tmp = (String) odbierzO();
+        if (!tmp.equals("!GOARES!")) {
+            System.out.println("błąd serwera przy GOARES");
+            return -1;
+        }
+        wyslijO((Attraction)atrakt);
+//        tmp = (String) odbierzO();
+//        if (tmp.equals("OK!")) {
+//            wyslijO("Dostałem potwierdzenie zakończenia protokołu wysłania produktu");
+//        }
         return 0;
     }
 }

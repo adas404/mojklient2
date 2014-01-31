@@ -4,24 +4,31 @@
  */
 package okienka;
 
+import java.awt.Color;
+import okienka.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import kinomaniak_objs.Attraction;
+import kinomaniak_objs.Product;
 import kinomaniak_objs.Show;
+import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 
 /**
  *
  * @author Adam
  */
-public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
+public class OknoAtrakcji extends javax.swing.JFrame implements ActionListener {
 
     /**
      * Creates new form OknoSeansow
      */
-    public OknoSeansow() {
+    public OknoAtrakcji() {
         initComponents();
     }
+    private Attraction[] atrakcje = new Attraction[30];
     private JButton[] button = new JButton[30];
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,20 +39,10 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(800, 600));
-
-        jLabel1.setText("Sala 1:");
-
-        jLabel2.setText("Sala 2:");
-
-        jLabel3.setText("Sala 3:");
 
         jButton1.setText("Powrót");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -59,72 +56,63 @@ public class OknoSeansow extends javax.swing.JFrame implements ActionListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(jLabel1)
-                .addGap(160, 160, 160)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(71, 71, 71))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(523, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addContainerGap(566, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void wyczyscOkno(){
-       for(int i=0;i<=9;i++){
+  //     for(int i=0;i<=9;i++){
 //                 KinomaniakKlientMoj2.klient2.oknseans.remove(button[i]);
-            }}
+            }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        KinomaniakKlientMoj2.klient2.oknseans.setVisible(false);
+        KinomaniakKlientMoj2.klient2.oknatrakcji.setVisible(false);
         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
-        KinomaniakKlientMoj2.klient2.oknseans.repaint();
+        KinomaniakKlientMoj2.klient2.oknatrakcji.repaint();
         this.wyczyscOkno();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     void rysujPrzyciski() {
-        int x=50,y=50;int i1=1;int i2=1;int i3=1;
-        Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
-        for (int i=0;i<=shss.length-1;i++){
+        int x=30,y=50;
+        KinomaniakKlientMoj2.klient2.pobierzAtrakcje();
+        atrakcje = KinomaniakKlientMoj2.klient2.getAtrakcje();
+        for (int i=0;i<atrakcje.length;i++){
                     button[i] = new JButton();          
-                    button[i].setSize(250,60); 
-                   System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
-                            +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
-                   button[i].setName(""+shss[i].getID());
-                    button[i].setText("<html>"+shss[i].getMovie().getName()+"<br />"+shss[i].getFormatted()+"</html>");
-                    if (shss[i].getRoom().getID()==1){
-                        button[i].setLocation(30,y+(i1*61));
-                        i1++;
+                    button[i].setSize(180,100); 
+                   //System.out.println(shss[i].getMovie().getName()+"-"+shss[i].getFormattedDate()
+                     //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
+                    button[i].setName(""+atrakcje[i].getId());
+                    button[i].setText("<html>"+atrakcje[i].getName()+"<br />"+"Cena: "+atrakcje[i].getPrice()
+                            +"zł"+"<br />");
+                    if (y>500){
+                        y=50;
+                        x+=180;
                     }
-                    if (shss[i].getRoom().getID()==2){
-                        button[i].setLocation(280,y+(i2*61));
-                        i2++;
-                    }
-                    if (shss[i].getRoom().getID()==3){
-                        button[i].setLocation(530,y+(i3*61));
-                        i3++;
-                        }
-                    KinomaniakKlientMoj2.klient2.oknseans.add(button[i]);
+                    button[i].setLocation(x,y);
+                    y+=100;
+                    button[i].revalidate();
+                    KinomaniakKlientMoj2.klient2.oknatrakcji.add(button[i]);
                     button[i].addActionListener(this);
-                    KinomaniakKlientMoj2.klient2.oknseans.repaint();
-        }
+                    KinomaniakKlientMoj2.klient2.oknatrakcji.revalidate();
+                    KinomaniakKlientMoj2.klient2.oknatrakcji.repaint();
+    }}
+    private void usunBatony(){
+//        for (int i=0;i<button.length;i++)
+//            button[i]=null;
+//        for (int i=0;i<produkty.length;i++)
+//            produkty[i]=null;
+//        
     }
     /**
      * @param args the command line arguments
@@ -162,20 +150,25 @@ private void wyczyscOkno(){
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        this.rysujPrzyciski();
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
-         int tmp = Integer.parseInt(zrodlo.getName());
-         KinomaniakKlientMoj2.klient2.oknsali.setVisible(true);
-         KinomaniakKlientMoj2.klient2.oknseans.setVisible(false);
-         KinomaniakKlientMoj2.klient2.oknsali.rysujSale(tmp);
+         KinomaniakKlientMoj2.klient2.sprzedajAtrakcje(atrakcje[Integer.parseInt(zrodlo.getName())]);
+         for (int i=0;i<atrakcje.length;i++)
+             if(Integer.parseInt(zrodlo.getName())==atrakcje[i].getId())
+                 KinomaniakKlientMoj2.klient2.okngl.dodajDoKoszyka(atrakcje[i].getName(),atrakcje[i].getPrice());
+         KinomaniakKlientMoj2.klient2.oknatrakcji.repaint();
+      //   this.usunBatony();
+         KinomaniakKlientMoj2.klient2.oknatrakcji.setVisible(false);
+         KinomaniakKlientMoj2.klient2.okngl.setVisible(true);
+         
+         
+        
 
         //To change body of generated methods, choose Tools | Templates.
     }
