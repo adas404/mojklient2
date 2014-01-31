@@ -158,10 +158,11 @@ private void wyczyscOkno(){
         JButton zrodlo = (JButton) ae.getSource();
 //        System.out.println((String)zrodlo.get)
          System.out.println((String)zrodlo.getName());
-         KinomaniakKlientMoj2.klient2.sprzedajAtrakcje(atrakcje[Integer.parseInt(zrodlo.getName())]);
+         //KinomaniakKlientMoj2.klient2.sprzedajAtrakcje(atrakcje[Integer.parseInt(zrodlo.getName())]);
          for (int i=0;i<atrakcje.length;i++)
-             if(Integer.parseInt(zrodlo.getName())==atrakcje[i].getId())
-                 KinomaniakKlientMoj2.klient2.okngl.dodajDoKoszyka(atrakcje[i].getName(),atrakcje[i].getPrice());
+             if(Integer.parseInt(zrodlo.getName())==atrakcje[i].getId()){
+                 KinomaniakKlientMoj2.klient2.sprzedajAtrakcje(atrakcje[i]);
+                 KinomaniakKlientMoj2.klient2.okngl.dodajDoKoszyka(atrakcje[i].getName(),atrakcje[i].getPrice());}
          KinomaniakKlientMoj2.klient2.oknatrakcji.repaint();
       //   this.usunBatony();
          KinomaniakKlientMoj2.klient2.oknatrakcji.setVisible(false);

@@ -179,7 +179,7 @@ public class OknoGlowne extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public DefaultTableModel koszyk;
-    private int suma =0;
+    private float suma =0;
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
          KinomaniakKlientMoj2.klient2.okngl.setVisible(false);
          KinomaniakKlientMoj2.klient2.oknrez.setVisible(true);
@@ -231,7 +231,7 @@ public class OknoGlowne extends javax.swing.JFrame {
     public void czyscKoszyk(){
             koszyk.setRowCount(0);
             suma=0;
-            poleSumy.setText(Integer.toString(suma));
+            poleSumy.setText(Float.toString(suma));
             Koszyk.revalidate();
             Koszyk.repaint();
     }
