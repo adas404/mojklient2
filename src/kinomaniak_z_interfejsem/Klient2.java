@@ -372,6 +372,7 @@ public class Klient2 implements KinomaniakInterface {
             object = this.oin.readObject();
         } catch (IOException e) {
             System.err.println("IOError!");
+            e.printStackTrace();
         } finally {
             return object;
         }
@@ -608,7 +609,10 @@ public class Klient2 implements KinomaniakInterface {
             System.out.println("Nie ma produktów!");
             return -4;
         }
-        atrakcje = (Attraction[]) odbierzO();
+//        atrakcje = (Attraction[]) odbierzO();
+        Object obj = odbierzO();
+       while(obj instanceof String) obj = odbierzO();
+       atrakcje = (Attraction[]) obj;
         return 0;
     }
       public Attraction[] getAtrakcje() {
