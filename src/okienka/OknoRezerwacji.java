@@ -147,7 +147,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
          Show[] shss = KinomaniakKlientMoj2.klient2.getShow();
          for (int i=0;i<tabres.length;i++){ //tabres[i].getShowID()
              int id = 0;
-             for(int j = 0; j < shss.length-1; j++) if(shss[j].getID() == tabres[i].getShowID()) id = j;
+             for(int j = 0; j < shss.length; j++) if(shss[j].getID() == tabres[i].getShowID()) id = j;
              if(tabres[i].isok()) 
                 if (sprzedane.isSelected())
                     continue;

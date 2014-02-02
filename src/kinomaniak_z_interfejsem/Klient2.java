@@ -25,6 +25,7 @@ import kinomaniak_objs.Product;
 import okienka.OknoAtrakcji;
 import okienka.OknoGlowne;
 import okienka.OknoLogowania;
+import okienka.OknoOpisu;
 import okienka.OknoProduktow;
 import okienka.OknoRezerwacji;
 import okienka.OknoSali;
@@ -60,6 +61,7 @@ public class Klient2 implements KinomaniakInterface {
     public OknoSali oknsali = new OknoSali();
     public OknoProduktow oknprodukt = new OknoProduktow();
     public OknoAtrakcji oknatrakcji = new OknoAtrakcji();
+    public OknoOpisu oknopisu = new OknoOpisu();
 
     /**
      * metoda a'la konstruktor klasy, wywoływana zaraz po utworzeniu obiektu

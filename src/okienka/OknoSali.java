@@ -7,6 +7,7 @@ package okienka;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import kinomaniak_objs.Show;
 import kinomaniak_z_interfejsem.KinomaniakKlientMoj2;
 
 /**
@@ -23,6 +24,10 @@ public class OknoSali extends javax.swing.JFrame {
     }
     private JCheckBox[][] checkbox = new JCheckBox[10][10];
     int idsh;
+
+    public int getIdsh() {
+        return idsh;
+    }
 public void rysujSale(int id_show){
     idsh=id_show;
     int [][] sala = KinomaniakKlientMoj2.klient2.czyZajete(id_show);    
@@ -79,6 +84,7 @@ private void wyczyscOkno(){
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         sprzedaj = new javax.swing.JButton();
+        opisfilmu = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -128,6 +134,13 @@ private void wyczyscOkno(){
             }
         });
 
+        opisfilmu.setText("Opis filmu");
+        opisfilmu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opisfilmuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,15 +149,16 @@ private void wyczyscOkno(){
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(208, 208, 208)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(146, 146, 146)
+                        .addGap(122, 122, 122)
                         .addComponent(sprzedaj)
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton2)))
+                        .addGap(31, 31, 31)
+                        .addComponent(jButton2)
+                        .addGap(37, 37, 37)
+                        .addComponent(opisfilmu))
+                    .addComponent(jLabel3))
+                .addGap(208, 208, 208)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -158,7 +172,8 @@ private void wyczyscOkno(){
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(sprzedaj))
+                    .addComponent(sprzedaj)
+                    .addComponent(opisfilmu))
                 .addGap(20, 20, 20))
         );
 
@@ -230,6 +245,12 @@ private void wyczyscOkno(){
         KinomaniakKlientMoj2.klient2.okngl.dodajDoKoszyka("Kino",(float) g*20);
         this.wyczyscOkno();
     }//GEN-LAST:event_sprzedajActionPerformed
+
+    private void opisfilmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opisfilmuActionPerformed
+        // TODO add your handling code here:
+        KinomaniakKlientMoj2.klient2.oknopisu.setVisible(true);
+        KinomaniakKlientMoj2.klient2.oknopisu.rysuj();
+    }//GEN-LAST:event_opisfilmuActionPerformed
     
     /**
      * @param args the command line arguments
@@ -272,6 +293,7 @@ private void wyczyscOkno(){
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton opisfilmu;
     private javax.swing.JButton sprzedaj;
     // End of variables declaration//GEN-END:variables
 }
