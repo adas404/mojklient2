@@ -106,6 +106,7 @@ private void wyczyscOkno(){
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Okno sali");
         setPreferredSize(new java.awt.Dimension(600, 850));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikony/ekranprzes.jpg"))); // NOI18N

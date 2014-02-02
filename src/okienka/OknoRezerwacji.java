@@ -4,6 +4,7 @@
  */
 package okienka;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import kinomaniak_objs.Res;
@@ -45,6 +46,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
         sprzedane = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Okno rezerwacji");
 
         tabelaRezerwacji.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,6 +143,7 @@ public class OknoRezerwacji extends javax.swing.JFrame {
     }//GEN-LAST:event_usunRezerwacjeActionPerformed
     
     public void stworzTabele(){
+        int k=0;
          tab = (DefaultTableModel)KinomaniakKlientMoj2.klient2.oknrez.getTabela().getModel();
          KinomaniakKlientMoj2.klient2.pobierzRezerwacje();
          tabres = KinomaniakKlientMoj2.klient2.getRezerwacja();

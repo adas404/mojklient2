@@ -42,6 +42,7 @@ public class OknoAtrakcji extends javax.swing.JFrame implements ActionListener {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Okno wyboru atrakcji");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jButton1.setText("Powrót");

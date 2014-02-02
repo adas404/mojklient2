@@ -47,6 +47,7 @@ public class OknoGlowne extends javax.swing.JFrame {
         atrakt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Okno główne programu K&K&A Entertainment");
         setResizable(false);
 
         jButton1.setText("Wyświetl rezerwacje");

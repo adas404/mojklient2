@@ -37,6 +37,8 @@ public class OknoOpisu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lrodzaj = new javax.swing.JLabel();
 
+        setTitle("Okno opisu filmu");
+        setBounds(new java.awt.Rectangle(100, 100, 0, 0));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
