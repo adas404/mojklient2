@@ -94,7 +94,7 @@ private void wyczyscOkno(){
                      //       +"sala: "+shss[i].getRoom().getID()+"showID:"+shss[i].getID());
                     button[i].setName(""+produkty[i].getId());
                     button[i].setText("<html>"+produkty[i].getName()+"<br />"+"Cena: "+produkty[i].getPrice()
-                            +"zł"+"<br />");
+                            +"zł"+"</html>");
                     if (y>500){
                         y=50;
                         x+=180;
@@ -116,6 +116,7 @@ private void wyczyscOkno(){
                     button[i].addActionListener(this);
                     KinomaniakKlientMoj2.klient2.oknprodukt.revalidate();
                     KinomaniakKlientMoj2.klient2.oknprodukt.repaint();
+                    super.repaint();
     }}
     private void usunBatony(){
         for (int i=0;i<button.length;i++)
